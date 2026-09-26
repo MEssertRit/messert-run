@@ -7,406 +7,536 @@
 <title>M'Essert Run 2026 — Essert</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    html {
-        scroll-behavior: smooth;
-    }
+html {
+    scroll-behavior: smooth;
+}
 
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-        background: #f7f5f0;
-        color: #222;
-        line-height: 1.6;
-    }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f5f0;
+    color: #222;
+    line-height: 1.6;
+}
 
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-    /* ---------- HEADER ---------- */
+/* ================= HEADER ================= */
 
-    header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background: rgba(255,255,255,0.96);
-        border-bottom: 1px solid #e5e2dc;
-        backdrop-filter: blur(10px);
-    }
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.96);
+    border-bottom: 1px solid #e5e2dc;
+    backdrop-filter: blur(10px);
+}
+
+.nav {
+    max-width: 1200px;
+    margin: auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.home-link {
+    background: #202020;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 800;
+}
+
+.home-link:hover {
+    background: #333;
+}
+
+nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #d96535;
+}
+
+.nav-button {
+    background: #e9c900;
+    color: #171717;
+    padding: 11px 18px;
+    border-radius: 8px;
+}
+
+.nav-button:hover {
+    background: #f3d51d;
+    color: #171717;
+}
+
+.menu-toggle {
+    display: none;
+    border: 0;
+    background: #202020;
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 590px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    background:
+        linear-gradient(rgba(255,255,255,.91), rgba(255,255,255,.96)),
+        #f7f5f0;
+}
+
+.hero-content {
+    max-width: 900px;
+}
+
+.hero-logo {
+    width: min(230px, 60vw);
+    display: block;
+    margin: 0 auto 25px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #d96535;
+    margin-bottom: 10px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 7vw, 68px);
+    line-height: .95;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+.hero-date {
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.hero-place {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 28px;
+}
+
+.hero-quick {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 auto 28px;
+}
+
+.quick-item {
+    background: white;
+    border: 1px solid #e5e2dc;
+    border-radius: 12px;
+    padding: 12px 18px;
+    min-width: 145px;
+}
+
+.quick-item strong {
+    display: block;
+    font-size: 21px;
+}
+
+.quick-item span {
+    color: #777;
+    font-size: 13px;
+}
+
+.cta {
+    display: inline-block;
+    background: #e9c900;
+    color: #171717;
+    padding: 16px 30px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 17px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+}
+
+.cta:hover {
+    background: #f3d51d;
+}
+
+/* ================= COUNTDOWN ================= */
+
+.countdown-section {
+    background: #202020;
+    color: white;
+    padding: 32px 20px;
+    text-align: center;
+}
+
+.countdown-title {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 13px;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.count-box {
+    min-width: 85px;
+    padding: 10px;
+}
+
+.count-number {
+    display: block;
+    font-size: 38px;
+    font-weight: 800;
+    color: #f1d21b;
+    line-height: 1;
+}
+
+.count-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #bbb;
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+    padding: 75px 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.section-title span {
+    color: #d96535;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.section-title h2 {
+    font-size: clamp(32px, 5vw, 48px);
+    margin-top: 8px;
+}
+
+/* ================= COURSES ================= */
+
+.courses {
+    background: white;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.course-card {
+    border: 1px solid #e5e2dc;
+    border-radius: 16px;
+    padding: 30px;
+    background: #fff;
+    text-align: center;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.course-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.course-card h3 {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.course-distance {
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.course-time {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #d96535;
+}
+
+.course-note {
+    margin-top: 5px;
+    color: #777;
+    font-size: 14px;
+}
+
+/* ================= INFO ================= */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 15px;
+    padding: 28px;
+    border: 1px solid #e5e2dc;
+}
+
+.info-card h3 {
+    margin-bottom: 10px;
+    font-size: 21px;
+}
+
+.info-card p {
+    color: #666;
+}
+
+/* ================= BENEVOLES ================= */
+
+.volunteer {
+    text-align: center;
+}
+
+.volunteer-content {
+    max-width: 700px;
+    margin: auto;
+}
+
+.volunteer-content p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* ================= REGISTRATION ================= */
+
+.registration {
+    background: #e9c900;
+    text-align: center;
+}
+
+.registration h2 {
+    font-size: clamp(32px, 5vw, 50px);
+    margin-bottom: 10px;
+}
+
+.registration p {
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+.cta-dark {
+    display: inline-block;
+    background: #202020;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.cta-dark:hover {
+    background: #333;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    background: #202020;
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+footer img {
+    width: 110px;
+    margin-bottom: 15px;
+}
+
+footer p {
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 800px) {
 
     .nav {
-        max-width: 1200px;
-        margin: auto;
-        padding: 12px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
+        padding: 8px 15px;
     }
 
-    .logo {
-        height: 70px;
-        width: auto;
+    .home-link {
+        display: none;
+    }
+
+    .menu-toggle {
         display: block;
     }
 
     nav {
+        position: absolute;
+        top: 61px;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: white;
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    nav.open {
         display: flex;
-        gap: 24px;
-        align-items: center;
-        font-size: 15px;
-        font-weight: bold;
     }
 
-    nav a:hover {
-        color: #e9c900;
+    nav a {
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
     }
 
-    .nav-button {
-        background: #e9c900;
-        color: #171717;
-        padding: 11px 18px;
-        border-radius: 8px;
+    nav .nav-button {
+        margin: 12px 20px;
+        text-align: center;
+        border: 0;
     }
-
-    .nav-button:hover {
-        background: #f3d51d;
-        color: #171717;
-    }
-
-    /* ---------- HERO ---------- */
 
     .hero {
-        min-height: 650px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 80px 20px;
-        background:
-            linear-gradient(rgba(255,255,255,0.90), rgba(255,255,255,0.96)),
-            #f7f5f0;
-    }
-
-    .hero-content {
-        max-width: 900px;
+        min-height: 570px;
+        padding: 45px 18px;
     }
 
     .hero-logo {
-        width: min(300px, 70vw);
-        margin: 0 auto 30px;
+        width: 180px;
+        margin-bottom: 20px;
     }
 
-    .eyebrow {
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #d96535;
-        margin-bottom: 10px;
-    }
-
-    h1 {
-        font-size: clamp(42px, 8vw, 82px);
-        line-height: 0.95;
-        margin-bottom: 25px;
-        text-transform: uppercase;
-        letter-spacing: -2px;
+    .hero h1 {
+        font-size: 38px;
     }
 
     .hero-date {
-        font-size: clamp(22px, 4vw, 34px);
-        font-weight: bold;
-        margin-bottom: 8px;
+        font-size: 25px;
     }
 
-    .hero-place {
+    .hero-quick {
+        gap: 8px;
+    }
+
+    .quick-item {
+        min-width: 130px;
+        padding: 10px 12px;
+    }
+
+    .quick-item strong {
         font-size: 18px;
-        color: #666;
-        margin-bottom: 35px;
     }
 
-    .cta {
-        display: inline-block;
-        background: #e9c900;
-        color: #171717;
-        padding: 16px 30px;
-        border-radius: 10px;
-        font-weight: 800;
-        font-size: 17px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-        transition: transform .2s, box-shadow .2s;
+    .course-grid,
+    .info-grid {
+        grid-template-columns: 1fr;
     }
 
-    .cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    }
-
-    /* ---------- COUNTDOWN ---------- */
-
-    .countdown-section {
-        background: #202020;
-        color: white;
-        padding: 35px 20px;
-        text-align: center;
-    }
-
-    .countdown-title {
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-size: 13px;
-        margin-bottom: 15px;
-        color: #ddd;
-    }
-
-    .countdown {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
+    section {
+        padding: 60px 18px;
     }
 
     .count-box {
-        min-width: 85px;
-        padding: 12px;
+        min-width: 70px;
     }
 
     .count-number {
-        display: block;
-        font-size: 38px;
-        font-weight: 800;
-        color: #f1d21b;
-        line-height: 1;
+        font-size: 30px;
     }
-
-    .count-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        color: #bbb;
-    }
-
-    /* ---------- SECTIONS ---------- */
-
-    section {
-        padding: 80px 20px;
-    }
-
-    .container {
-        max-width: 1100px;
-        margin: auto;
-    }
-
-    .section-title {
-        text-align: center;
-        margin-bottom: 45px;
-    }
-
-    .section-title span {
-        color: #d96535;
-        font-size: 13px;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        font-weight: bold;
-    }
-
-    .section-title h2 {
-        font-size: clamp(32px, 5vw, 48px);
-        margin-top: 8px;
-    }
-
-    /* ---------- COURSES ---------- */
-
-    .courses {
-        background: white;
-    }
-
-    .course-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 22px;
-    }
-
-    .course-card {
-        border: 1px solid #e5e2dc;
-        border-radius: 16px;
-        padding: 30px;
-        background: #fff;
-        text-align: center;
-        transition: transform .2s, box-shadow .2s;
-    }
-
-    .course-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(0,0,0,.08);
-    }
-
-    .course-icon {
-        font-size: 42px;
-        margin-bottom: 15px;
-    }
-
-    .course-card h3 {
-        font-size: 25px;
-        margin-bottom: 8px;
-    }
-
-    .course-card p {
-        color: #666;
-    }
-
-    .course-time {
-        margin-top: 18px;
-        font-weight: bold;
-        color: #d96535;
-    }
-
-    /* ---------- INFO ---------- */
-
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 22px;
-    }
-
-    .info-card {
-        background: white;
-        border-radius: 15px;
-        padding: 28px;
-        border: 1px solid #e5e2dc;
-    }
-
-    .info-card h3 {
-        margin-bottom: 10px;
-        font-size: 21px;
-    }
-
-    .info-card p {
-        color: #666;
-    }
-
-    /* ---------- CTA ---------- */
-
-    .registration {
-        background: #e9c900;
-        text-align: center;
-    }
-
-    .registration h2 {
-        font-size: clamp(32px, 5vw, 50px);
-        margin-bottom: 10px;
-    }
-
-    .registration p {
-        margin-bottom: 25px;
-        font-size: 18px;
-    }
-
-    .cta-dark {
-        display: inline-block;
-        background: #202020;
-        color: white;
-        padding: 15px 30px;
-        border-radius: 9px;
-        font-weight: bold;
-    }
-
-    /* ---------- FOOTER ---------- */
-
-    footer {
-        background: #202020;
-        color: white;
-        text-align: center;
-        padding: 45px 20px;
-    }
-
-    footer img {
-        width: 130px;
-        margin-bottom: 15px;
-    }
-
-    footer p {
-        color: #aaa;
-        font-size: 14px;
-    }
-
-    /* ---------- MOBILE ---------- */
-
-    @media (max-width: 800px) {
-
-        nav a:not(.nav-button) {
-            display: none;
-        }
-
-        .nav {
-            padding: 8px 15px;
-        }
-
-        .logo {
-            height: 58px;
-        }
-
-        .hero {
-            min-height: 580px;
-            padding: 50px 20px;
-        }
-
-        .hero-logo {
-            width: 220px;
-        }
-
-        .course-grid,
-        .info-grid {
-            grid-template-columns: 1fr;
-        }
-
-        section {
-            padding: 60px 18px;
-        }
-
-        .count-box {
-            min-width: 70px;
-        }
-
-        .count-number {
-            font-size: 30px;
-        }
-    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
+
     <div class="nav">
 
-        <a href="#accueil">
-            <img src="logo-messert-run.svg"
-                 alt="M'Essert Run"
-                 class="logo">
+        <a href="#accueil" class="home-link">
+            Accueil
         </a>
 
-        <nav>
-            <a href="#epreuves">Épreuves</a>
-            <a href="#infos">Infos</a>
-            <a href="#parcours">Parcours</a>
-            <a href="#benevoles">Bénévoles</a>
-            <a href="#inscription" class="nav-button">S'inscrire</a>
+        <button class="menu-toggle"
+                id="menuToggle"
+                aria-label="Ouvrir le menu">
+            ☰
+        </button>
+
+        <nav id="mainNav">
+
+            <a href="#accueil">🏠 Accueil</a>
+            <a href="#epreuves">🏃 Épreuves</a>
+            <a href="#infos">ℹ️ Infos</a>
+            <a href="#parcours">🗺️ Parcours</a>
+            <a href="#benevoles">🙋 Bénévoles</a>
+            <a href="#inscription" class="nav-button">🎟️ S'inscrire</a>
+
         </nav>
 
     </div>
+
 </header>
 
 
 <main>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 
 <section class="hero" id="accueil">
 
@@ -420,14 +550,32 @@
             Course & marche à Essert
         </div>
 
-        <h1>M'Essert Run</h1>
-
-        <div class="hero-date">
+        <h1>
+            Rendez-vous le<br>
             8 novembre 2026
-        </div>
+        </h1>
 
         <div class="hero-place">
             📍 Essert — Messery
+        </div>
+
+        <div class="hero-quick">
+
+            <div class="quick-item">
+                <strong>10 km</strong>
+                <span>Course · départ 9h15</span>
+            </div>
+
+            <div class="quick-item">
+                <strong>6–7 km</strong>
+                <span>Marche · départ 8h45</span>
+            </div>
+
+            <div class="quick-item">
+                <strong>1 ou 2,2 km</strong>
+                <span>Épreuves enfants</span>
+            </div>
+
         </div>
 
         <a href="#inscription" class="cta">
@@ -439,7 +587,7 @@
 </section>
 
 
-<!-- COUNTDOWN -->
+<!-- ================= COUNTDOWN ================= -->
 
 <section class="countdown-section">
 
@@ -474,7 +622,7 @@
 </section>
 
 
-<!-- EPREUVES -->
+<!-- ================= EPREUVES ================= -->
 
 <section class="courses" id="epreuves">
 
@@ -488,30 +636,65 @@
         <div class="course-grid">
 
             <div class="course-card">
+
                 <div class="course-icon">🏃</div>
+
                 <h3>Course</h3>
-                <p>10 km</p>
-                <div class="course-time">
-                    Premier départ : 9h15
+
+                <div class="course-distance">
+                    10 km
                 </div>
+
+                <div class="course-time">
+                    Premier départ · 9h15
+                </div>
+
+                <div class="course-note">
+                    Parcours chronométré
+                </div>
+
             </div>
 
+
             <div class="course-card">
+
                 <div class="course-icon">🥾</div>
+
                 <h3>Marche</h3>
-                <p>6 à 7 km</p>
-                <div class="course-time">
-                    Départ : 8h45
+
+                <div class="course-distance">
+                    6–7 km
                 </div>
+
+                <div class="course-time">
+                    Départ · 8h45
+                </div>
+
+                <div class="course-note">
+                    Parcours convivial
+                </div>
+
             </div>
 
+
             <div class="course-card">
+
                 <div class="course-icon">🏃‍♀️</div>
+
                 <h3>Enfants</h3>
-                <p>1 km ou 2,2 km</p>
+
+                <div class="course-distance">
+                    1 ou 2,2 km
+                </div>
+
                 <div class="course-time">
+                    Pour les plus jeunes
+                </div>
+
+                <div class="course-note">
                     Parcours adaptés
                 </div>
+
             </div>
 
         </div>
@@ -521,7 +704,7 @@
 </section>
 
 
-<!-- INFOS -->
+<!-- ================= INFOS ================= -->
 
 <section id="infos">
 
@@ -535,30 +718,41 @@
         <div class="info-grid">
 
             <div class="info-card">
+
                 <h3>📍 Où ?</h3>
+
                 <p>
                     Rendez-vous à Essert, sur la commune de Messery.
                     Les informations précises concernant le départ
                     seront communiquées prochainement.
                 </p>
+
             </div>
 
+
             <div class="info-card">
+
                 <h3>📅 Quand ?</h3>
+
                 <p>
                     Dimanche 8 novembre 2026.
                     Les marcheurs prennent le départ à 8h45
                     et les premiers coureurs à 9h15.
                 </p>
+
             </div>
 
+
             <div class="info-card">
+
                 <h3>🎉 Après l'effort</h3>
+
                 <p>
                     Un moment convivial attend les participants
                     après les épreuves.
                     Les détails du programme seront bientôt disponibles.
                 </p>
+
             </div>
 
         </div>
@@ -568,7 +762,7 @@
 </section>
 
 
-<!-- PARCOURS -->
+<!-- ================= PARCOURS ================= -->
 
 <section class="courses" id="parcours">
 
@@ -582,27 +776,38 @@
         <div class="info-grid">
 
             <div class="info-card">
+
                 <h3>🏃 Course 10 km</h3>
+
                 <p>
                     Découvrez prochainement le parcours détaillé,
                     son dénivelé et les différents points de passage.
                 </p>
+
             </div>
 
+
             <div class="info-card">
+
                 <h3>🥾 Marche</h3>
+
                 <p>
                     Un parcours convivial de 6 à 7 km,
                     accessible aux marcheurs.
                 </p>
+
             </div>
 
+
             <div class="info-card">
+
                 <h3>🗺️ Carte interactive</h3>
+
                 <p>
                     Les parcours pourront être consultés
                     directement sur une carte interactive.
                 </p>
+
             </div>
 
         </div>
@@ -612,25 +817,33 @@
 </section>
 
 
-<!-- BENEVOLES -->
+<!-- ================= BENEVOLES ================= -->
 
-<section id="benevoles">
+<section id="benevoles" class="volunteer">
 
     <div class="container">
 
         <div class="section-title">
-            <span>Sans eux, rien ne serait possible</span>
-            <h2>Devenez bénévole</h2>
+
+            <span>
+                Sans eux, rien ne serait possible
+            </span>
+
+            <h2>
+                Devenez bénévole
+            </h2>
+
         </div>
 
-        <div style="text-align:center; max-width:700px; margin:auto;">
+        <div class="volunteer-content">
 
-            <p style="font-size:18px; margin-bottom:25px;">
-                Vous souhaitez donner un coup de main à l'organisation
-                de la M'Essert Run ?
+            <p>
+                Vous souhaitez donner un coup de main à
+                l'organisation de la M'Essert Run ?
             </p>
 
-            <a href="mailto:messert-rit@protonmail.com" class="cta">
+            <a href="mailto:messert-rit@protonmail.com"
+               class="cta">
                 JE VEUX AIDER
             </a>
 
@@ -641,19 +854,21 @@
 </section>
 
 
-<!-- INSCRIPTION -->
+<!-- ================= INSCRIPTION ================= -->
 
 <section class="registration" id="inscription">
 
     <div class="container">
 
-        <h2>Prêt à relever le défi ?</h2>
+        <h2>
+            Prêt à relever le défi ?
+        </h2>
 
         <p>
             Les inscriptions seront ouvertes prochainement.
         </p>
 
-        <!-- Nous remplacerons ce lien par le lien HelloAsso -->
+        <!-- Le lien HelloAsso sera ajouté ici -->
 
         <a href="#" class="cta-dark">
             OUVRIR LA BILLETTERIE
@@ -665,6 +880,8 @@
 
 </main>
 
+
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -684,22 +901,54 @@
 
 <script>
 
-const eventDate = new Date("November 8, 2026 08:45:00").getTime();
+/* ================= MENU MOBILE ================= */
+
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
+
+menuToggle.addEventListener("click", function() {
+
+    mainNav.classList.toggle("open");
+
+});
+
+
+/* Fermer le menu après avoir cliqué */
+
+document.querySelectorAll("#mainNav a").forEach(function(link) {
+
+    link.addEventListener("click", function() {
+        mainNav.classList.remove("open");
+    });
+
+});
+
+
+/* ================= COUNTDOWN ================= */
+
+const eventDate =
+    new Date("November 8, 2026 08:45:00").getTime();
 
 function updateCountdown() {
 
     const now = new Date().getTime();
+
     const distance = eventDate - now;
 
     if (distance <= 0) {
+
         document.getElementById("days").textContent = "0";
         document.getElementById("hours").textContent = "0";
         document.getElementById("minutes").textContent = "0";
         document.getElementById("seconds").textContent = "0";
+
         return;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+    );
+
     const hours = Math.floor(
         (distance % (1000 * 60 * 60 * 24)) /
         (1000 * 60 * 60)
@@ -722,6 +971,7 @@ function updateCountdown() {
 }
 
 updateCountdown();
+
 setInterval(updateCountdown, 1000);
 
 </script>
