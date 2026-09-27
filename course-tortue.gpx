@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="www.plotaroute.com" version="1.1"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<desc>Route created on plotaroute.com</desc>
+</metadata>
+<wpt lat="46.354383" lon="6.317248">
+<time>2026-09-27T00:00:00Z</time>
+<name>Start on C</name>
+<cmt>Start on Chemin de Vorget</cmt>
+<desc>Start on Chemin de Vorget</desc>
+<sym>Flag, Blue</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.354038" lon="6.31724">
+<time>2026-09-27T00:00:14Z</time>
+<name>Restez sur</name>
+<cmt>Restez sur la gauche</cmt>
+<desc>Restez sur la gauche</desc>
+<sym>Straight</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.353651" lon="6.317405">
+<time>2026-09-27T00:00:30Z</time>
+<name>Restez sur</name>
+<cmt>Restez sur la gauche sur Rue d&#39;Essert</cmt>
+<desc>Restez sur la gauche sur Rue d&#39;Essert</desc>
+<sym>Left_slight</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.353403" lon="6.317952">
+<time>2026-09-27T00:00:48Z</time>
+<name>Restez sur</name>
+<cmt>Restez sur la gauche</cmt>
+<desc>Restez sur la gauche</desc>
+<sym>Straight</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.353007" lon="6.320072">
+<time>2026-09-27T00:01:50Z</time>
+<name>Tournez fo</name>
+<cmt>Tournez fort à droite sur Rue de Trai les Granges</cmt>
+<desc>Tournez fort à droite sur Rue de Trai les Granges</desc>
+<sym>Right_sharp</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.351723" lon="6.320018">
+<time>2026-09-27T00:02:43Z</time>
+<name>Tournez à </name>
+<cmt>Tournez à droite sur Chemin d&#39;Avau</cmt>
+<desc>Tournez à droite sur Chemin d&#39;Avau</desc>
+<sym>Right</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.352916" lon="6.31754">
+<time>2026-09-27T00:04:15Z</time>
+<name>Restez sur</name>
+<cmt>Restez sur la gauche sur Chemin d&#39;Avau</cmt>
+<desc>Restez sur la gauche sur Chemin d&#39;Avau</desc>
+<sym>Left_slight</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.353508" lon="6.317389">
+<time>2026-09-27T00:04:40Z</time>
+<name>Tournez à </name>
+<cmt>Tournez à droite</cmt>
+<desc>Tournez à droite</desc>
+<sym>Right</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.354038" lon="6.31724">
+<time>2026-09-27T00:05:03Z</time>
+<name>Restez sur</name>
+<cmt>Restez sur la droite sur Chemin de Vorget</cmt>
+<desc>Restez sur la droite sur Chemin de Vorget</desc>
+<sym>Straight</sym>
+<type>Waypoint</type>
+</wpt>
+<wpt lat="46.354377" lon="6.317247">
+<time>2026-09-27T00:05:17Z</time>
+<name>FINISH</name>
+<cmt>FINISH</cmt>
+<desc>FINISH</desc>
+<sym>Flag, Blue</sym>
+<type>Waypoint</type>
+</wpt>
+<trk>
+<name>M’Essert Run Kids 2026</name>
+<trkseg>
+<trkpt lat="46.354383" lon="6.317248">
+<ele>447</ele>
+<time>2026-09-27T00:00:00Z</time></trkpt>
+<trkpt lat="46.354383" lon="6.317248">
+<ele>447</ele>
+<time>2026-09-27T00:00:00Z</time></trkpt>
+<trkpt lat="46.354038" lon="6.31724">
+<ele>448</ele>
+<time>2026-09-27T00:00:14Z</time></trkpt>
+<trkpt lat="46.353972" lon="6.317269">
+<ele>449</ele>
+<time>2026-09-27T00:00:17Z</time></trkpt>
+<trkpt lat="46.353664" lon="6.3174">
+<ele>449</ele>
+<time>2026-09-27T00:00:29Z</time></trkpt>
+<trkpt lat="46.353651" lon="6.317405">
+<ele>449</ele>
+<time>2026-09-27T00:00:30Z</time></trkpt>
+<trkpt lat="46.353403" lon="6.317952">
+<ele>448</ele>
+<time>2026-09-27T00:00:48Z</time></trkpt>
+<trkpt lat="46.353363" lon="6.318066">
+<ele>448</ele>
+<time>2026-09-27T00:00:52Z</time></trkpt>
+<trkpt lat="46.353175" lon="6.318691">
+<ele>449</ele>
+<time>2026-09-27T00:01:10Z</time></trkpt>
+<trkpt lat="46.353146" lon="6.318856">
+<ele>449</ele>
+<time>2026-09-27T00:01:15Z</time></trkpt>
+<trkpt lat="46.353135" lon="6.319098">
+<ele>449</ele>
+<time>2026-09-27T00:01:22Z</time></trkpt>
+<trkpt lat="46.353155" lon="6.319383">
+<ele>450</ele>
+<time>2026-09-27T00:01:30Z</time></trkpt>
+<trkpt lat="46.353148" lon="6.319486">
+<ele>450</ele>
+<time>2026-09-27T00:01:33Z</time></trkpt>
+<trkpt lat="46.353148" lon="6.319486">
+<ele>450</ele>
+<time>2026-09-27T00:01:33Z</time></trkpt>
+<trkpt lat="46.353007" lon="6.320072">
+<ele>450</ele>
+<time>2026-09-27T00:01:50Z</time></trkpt>
+<trkpt lat="46.352994" lon="6.32005">
+<ele>450</ele>
+<time>2026-09-27T00:01:51Z</time></trkpt>
+<trkpt lat="46.35296" lon="6.320025">
+<ele>450</ele>
+<time>2026-09-27T00:01:52Z</time></trkpt>
+<trkpt lat="46.352574" lon="6.319835">
+<ele>448</ele>
+<time>2026-09-27T00:02:09Z</time></trkpt>
+<trkpt lat="46.352496" lon="6.31982">
+<ele>447</ele>
+<time>2026-09-27T00:02:12Z</time></trkpt>
+<trkpt lat="46.352345" lon="6.319845">
+<ele>446</ele>
+<time>2026-09-27T00:02:18Z</time></trkpt>
+<trkpt lat="46.352345" lon="6.319845">
+<ele>446</ele>
+<time>2026-09-27T00:02:18Z</time></trkpt>
+<trkpt lat="46.351723" lon="6.320018">
+<ele>441</ele>
+<time>2026-09-27T00:02:43Z</time></trkpt>
+<trkpt lat="46.351681" lon="6.31971">
+<ele>440</ele>
+<time>2026-09-27T00:02:52Z</time></trkpt>
+<trkpt lat="46.351674" lon="6.319633">
+<ele>440</ele>
+<time>2026-09-27T00:02:54Z</time></trkpt>
+<trkpt lat="46.351675" lon="6.319479">
+<ele>440</ele>
+<time>2026-09-27T00:02:58Z</time></trkpt>
+<trkpt lat="46.351689" lon="6.319353">
+<ele>440</ele>
+<time>2026-09-27T00:03:02Z</time></trkpt>
+<trkpt lat="46.351729" lon="6.319187">
+<ele>440</ele>
+<time>2026-09-27T00:03:07Z</time></trkpt>
+<trkpt lat="46.351965" lon="6.318607">
+<ele>441</ele>
+<time>2026-09-27T00:03:25Z</time></trkpt>
+<trkpt lat="46.35204" lon="6.318459">
+<ele>441</ele>
+<time>2026-09-27T00:03:30Z</time></trkpt>
+<trkpt lat="46.352425" lon="6.317955">
+<ele>443</ele>
+<time>2026-09-27T00:03:51Z</time></trkpt>
+<trkpt lat="46.352425" lon="6.317955">
+<ele>443</ele>
+<time>2026-09-27T00:03:51Z</time></trkpt>
+<trkpt lat="46.352749" lon="6.317534">
+<ele>444</ele>
+<time>2026-09-27T00:04:09Z</time></trkpt>
+<trkpt lat="46.352803" lon="6.31751">
+<ele>444</ele>
+<time>2026-09-27T00:04:11Z</time></trkpt>
+<trkpt lat="46.352916" lon="6.31754">
+<ele>445</ele>
+<time>2026-09-27T00:04:15Z</time></trkpt>
+<trkpt lat="46.35303" lon="6.317517">
+<ele>446</ele>
+<time>2026-09-27T00:04:20Z</time></trkpt>
+<trkpt lat="46.353262" lon="6.317431">
+<ele>447</ele>
+<time>2026-09-27T00:04:30Z</time></trkpt>
+<trkpt lat="46.353508" lon="6.317389">
+<ele>448</ele>
+<time>2026-09-27T00:04:40Z</time></trkpt>
+<trkpt lat="46.353514" lon="6.317415">
+<ele>448</ele>
+<time>2026-09-27T00:04:40Z</time></trkpt>
+<trkpt lat="46.353517" lon="6.317427">
+<ele>448</ele>
+<time>2026-09-27T00:04:41Z</time></trkpt>
+<trkpt lat="46.353533" lon="6.31742">
+<ele>448</ele>
+<time>2026-09-27T00:04:41Z</time></trkpt>
+<trkpt lat="46.353568" lon="6.31737">
+<ele>448</ele>
+<time>2026-09-27T00:04:43Z</time></trkpt>
+<trkpt lat="46.353632" lon="6.317405">
+<ele>449</ele>
+<time>2026-09-27T00:04:46Z</time></trkpt>
+<trkpt lat="46.353664" lon="6.3174">
+<ele>449</ele>
+<time>2026-09-27T00:04:47Z</time></trkpt>
+<trkpt lat="46.353972" lon="6.317269">
+<ele>449</ele>
+<time>2026-09-27T00:05:00Z</time></trkpt>
+<trkpt lat="46.354038" lon="6.31724">
+<ele>448</ele>
+<time>2026-09-27T00:05:03Z</time></trkpt>
+<trkpt lat="46.35409" lon="6.317241">
+<ele>448</ele>
+<time>2026-09-27T00:05:05Z</time></trkpt>
+<trkpt lat="46.35409" lon="6.317241">
+<ele>448</ele>
+<time>2026-09-27T00:05:05Z</time></trkpt>
+<trkpt lat="46.354377" lon="6.317247">
+<ele>447</ele>
+<time>2026-09-27T00:05:17Z</time></trkpt>
+</trkseg>
+</trk>
+</gpx>
