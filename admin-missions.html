@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M’Essert Run — Gestion des missions</title>
+
+<style>
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f1e8;
+        color: #202020;
+    }
+
+    header {
+        background: #202020;
+        padding: 20px;
+        text-align: center;
+    }
+
+    header img {
+        width: 130px;
+        max-width: 55%;
+    }
+
+    main {
+        max-width: 800px;
+        margin: auto;
+        padding: 25px 20px 50px;
+    }
+
+    .box {
+        background: white;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    }
+
+    label {
+        display: block;
+        margin: 12px 0 6px;
+        font-weight: bold;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 18px;
+        padding: 13px;
+        border: 0;
+        border-radius: 8px;
+        background: #b84b3f;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #message {
+        text-align: center;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo-messert-run.svg" alt="M’Essert Run">
+</header>
+
+<main>
+
+    <h1>📋 Gestion des missions</h1>
+
+    <div class="box">
+
+        <h2>Ajouter une mission</h2>
+
+        <form id="mission-form">
+
+            <label for="title">Mission / poste</label>
+            <input id="title" required
+                   placeholder="Ex. Service bar">
+
+            <label for="category">Catégorie</label>
+            <select id="category">
+                <option value="">— Choisir —</option>
+                <option>🚧 Sécurité / signaleur</option>
+                <option>🍽️ Repas</option>
+                <option>🍺 Bar</option>
+                <option>🚗 Parking</option>
+                <option>🏁 Course</option>
+                <option>🔧 Installation / démontage</option>
+                <option>💧 Ravitaillement</option>
+                <option>⏱️ Chronométrage</option>
+                <option>🎤 Animation</option>
+                <option>🔥 Cuisine / four</option>
+                <option>📋 Dossards</option>
+            </select>
+
+            <label for="race">Course / épreuve</label>
+            <input id="race"
+                   placeholder="Ex. 10 km">
+
+            <label for="location">Lieu</label>
+            <input id="location"
+                   placeholder="Ex. Rond-Point / Seppe">
+
+            <label for="start_time">Début</label>
+            <input id="start_time" type="time">
+
+            <label for="end_time">Fin</label>
+            <input id="end_time" type="time">
+
+            <label for="people_needed">Nombre de personnes</label>
+            <input id="people_needed"
+                   type="number"
+                   min="1"
+                   value="1">
+
+            <label>
+                <input id="optional"
+                       type="checkbox"
+                       style="width:auto;">
+                Mission facultative
+            </label>
+
+            <label for="instructions">Instructions</label>
+            <textarea id="instructions"
+                      placeholder="Informations utiles pour les bénévoles"></textarea>
+
+            <button type="submit">
+                AJOUTER LA MISSION
+            </button>
+
+        </form>
+
+    </div>
+
+    <div id="message"></div>
+
+    <a href="qui-fait-quoi.html">
+        ← Voir le planning
+    </a>
+
+</main>
+
+<script>
+
+document
+.getElementById("mission-form")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const data = {
+
+        title:
+            document.getElementById("title").value,
+
+        category:
+            document.getElementById("category").value,
+
+        race:
+            document.getElementById("race").value,
+
+        location:
+            document.getElementById("location").value,
+
+        start_time:
+            document.getElementById("start_time").value,
+
+        end_time:
+            document.getElementById("end_time").value,
+
+        people_needed:
+            document.getElementById("people_needed").value,
+
+        optional:
+            document.getElementById("optional").checked,
+
+        instructions:
+            document.getElementById("instructions").value
+
+    };
+
+    try {
+
+        const response = await fetch("/api/missions", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(data)
+
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            document.getElementById("message").textContent =
+                "Mission ajoutée.";
+
+            this.reset();
+
+            document.getElementById("people_needed").value = 1;
+
+        } else {
+
+            document.getElementById("message").textContent =
+                result.error || "Une erreur est survenue.";
+
+        }
+
+    } catch {
+
+        document.getElementById("message").textContent =
+            "Impossible de communiquer avec le serveur.";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
