@@ -158,6 +158,79 @@
 
 </main>
 
+
+
+   
+
+
+async function editVolunteer(id) {
+
+    const firstName = prompt("Prénom :");
+    if (firstName === null) return;
+
+    const lastName = prompt("Nom :");
+    if (lastName === null) return;
+
+    const phone = prompt("Téléphone :");
+    if (phone === null) return;
+
+    const notes = prompt("Notes :");
+    if (notes === null) return;
+
+    const response = await fetch("/api/volunteers", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id,
+            first_name: firstName,
+            last_name: lastName,
+            phone,
+            notes
+        })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        loadVolunteers();
+    } else {
+        alert(result.error || "Impossible de modifier le bénévole.");
+    }
+}
+
+
+async function deleteVolunteer(id) {
+
+    if (!confirm("Supprimer ce bénévole ?")) {
+        return;
+    }
+
+    const response = await fetch("/api/volunteers", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        loadVolunteers();
+    } else {
+        alert(result.error || "Impossible de supprimer le bénévole.");
+    }
+}
+
+
+
+
+
+   
+   
+   
 <script>
 
 async function loadVolunteers() {
@@ -181,11 +254,24 @@ async function loadVolunteers() {
             const card = document.createElement("div");
             card.className = "volunteer";
 
-            card.innerHTML = `
-                <h2>${volunteer.first_name} ${volunteer.last_name}</h2>
-                ${volunteer.phone ? `<p>📞 ${volunteer.phone}</p>` : ""}
-                ${volunteer.notes ? `<p>📝 ${volunteer.notes}</p>` : ""}
-            `;
+           
+
+card.innerHTML = `
+    <h2>${volunteer.first_name} ${volunteer.last_name}</h2>
+
+    ${volunteer.phone ? `<p>📞 ${volunteer.phone}</p>` : ""}
+    ${volunteer.notes ? `<p>📝 ${volunteer.notes}</p>` : ""}
+
+    <button onclick="editVolunteer(${volunteer.id})">
+        ✏️ MODIFIER
+    </button>
+
+    <button
+        onclick="deleteVolunteer(${volunteer.id})"
+        style="background:#666;">
+        🗑️ SUPPRIMER
+    </button>
+`;
 
             container.appendChild(card);
 
