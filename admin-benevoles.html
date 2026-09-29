@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M’Essert Run — Gestion des bénévoles</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f1e8;
+        color: #202020;
+    }
+
+    header {
+        background: #202020;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    header img {
+        width: 130px;
+        max-width: 55%;
+    }
+
+    main {
+        max-width: 800px;
+        margin: auto;
+        padding: 25px 20px 50px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .form-box,
+    .volunteer {
+        background: white;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    label {
+        display: block;
+        margin: 12px 0 6px;
+        font-weight: bold;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 18px;
+        padding: 13px;
+        border: 0;
+        border-radius: 8px;
+        background: #b84b3f;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .volunteer h2 {
+        margin: 0 0 8px;
+    }
+
+    .volunteer p {
+        margin: 5px 0;
+    }
+
+    .back {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+        color: #202020;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    #message {
+        text-align: center;
+        margin: 15px 0;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo-messert-run.svg" alt="M’Essert Run">
+</header>
+
+<main>
+
+    <h1>👤 Gestion des bénévoles</h1>
+
+    <div class="form-box">
+
+        <h2>Ajouter un bénévole</h2>
+
+        <form id="volunteer-form">
+
+            <label for="first_name">Prénom</label>
+            <input type="text" id="first_name" required>
+
+            <label for="last_name">Nom</label>
+            <input type="text" id="last_name" required>
+
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone">
+
+            <label for="notes">Notes</label>
+            <textarea id="notes"></textarea>
+
+            <button type="submit">
+                AJOUTER LE BÉNÉVOLE
+            </button>
+
+        </form>
+
+    </div>
+
+    <div id="message"></div>
+
+    <h2>Liste des bénévoles</h2>
+
+    <div id="volunteers">
+        Chargement...
+    </div>
+
+    <a class="back" href="espace-benevoles.html">
+        ← Retour à l’espace bénévoles
+    </a>
+
+</main>
+
+<script>
+
+async function loadVolunteers() {
+
+    const container = document.getElementById("volunteers");
+
+    try {
+
+        const response = await fetch("/api/volunteers");
+        const volunteers = await response.json();
+
+        container.innerHTML = "";
+
+        if (volunteers.length === 0) {
+            container.innerHTML = "<p>Aucun bénévole enregistré.</p>";
+            return;
+        }
+
+        volunteers.forEach(volunteer => {
+
+            const card = document.createElement("div");
+            card.className = "volunteer";
+
+            card.innerHTML = `
+                <h2>${volunteer.first_name} ${volunteer.last_name}</h2>
+                ${volunteer.phone ? `<p>📞 ${volunteer.phone}</p>` : ""}
+                ${volunteer.notes ? `<p>📝 ${volunteer.notes}</p>` : ""}
+            `;
+
+            container.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        container.innerHTML =
+            "<p>Impossible de charger les bénévoles.</p>";
+
+    }
+}
+
+
+document
+.getElementById("volunteer-form")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const data = {
+
+        first_name:
+            document.getElementById("first_name").value,
+
+        last_name:
+            document.getElementById("last_name").value,
+
+        phone:
+            document.getElementById("phone").value,
+
+        notes:
+            document.getElementById("notes").value
+
+    };
+
+    const response = await fetch("/api/volunteers", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(data)
+
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+
+        document.getElementById("message").textContent =
+            "Bénévole ajouté.";
+
+        this.reset();
+
+        loadVolunteers();
+
+    } else {
+
+        document.getElementById("message").textContent =
+            result.error || "Une erreur est survenue.";
+
+    }
+
+});
+
+
+loadVolunteers();
+
+</script>
+
+</body>
+</html>
