@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M’Essert Run — Espace bénévoles</title>
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f1e8;
+        color: #202020;
+    }
+
+    .login {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 420px;
+        background: white;
+        padding: 35px 25px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        text-align: center;
+    }
+
+    .login-box img {
+        width: 180px;
+        max-width: 70%;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        margin: 0 0 10px;
+        font-size: 28px;
+    }
+
+    p {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        text-align: left;
+        margin: 15px 0 6px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 25px;
+        padding: 14px;
+        border: 0;
+        border-radius: 8px;
+        background: #b84b3f;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="login">
+
+    <div class="login-box">
+
+        <img src="logo-messert-run.svg" alt="M’Essert Run">
+
+        <h1>Espace bénévoles</h1>
+
+        <p>Connectez-vous pour accéder aux informations de la M’Essert Run.</p>
+
+        <form>
+            <label for="identifiant">Identifiant</label>
+            <input type="text" id="identifiant" autocomplete="username">
+
+            <label for="motdepasse">Mot de passe</label>
+            <input type="password" id="motdepasse" autocomplete="current-password">
+
+            <button type="submit">SE CONNECTER</button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
