@@ -105,5 +105,35 @@
 
 </div>
 
+<script>
+document.querySelector("form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const identifiant = document.getElementById("identifiant").value.trim();
+
+    if (!identifiant) {
+        alert("Veuillez saisir votre identifiant.");
+        return;
+    }
+
+    const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ identifiant })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        sessionStorage.setItem("role", result.role);
+        window.location.href = "espace-benevoles.html";
+    } else {
+        alert("Identifiant incorrect.");
+    }
+});
+</script>
+   
 </body>
 </html>
