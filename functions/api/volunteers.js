@@ -54,9 +54,106 @@ export async function onRequest(context) {
                 }
             );
 
-        } catch (error) {
+        } catch {
             return new Response(
                 JSON.stringify({ error: "Données invalides." }),
+                {
+                    status: 400,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+        }
+    }
+
+    if (request.method === "PUT") {
+        try {
+            const data = await request.json();
+
+            const id = Number(data.id);
+            const firstName = (data.first_name || "").trim();
+            const lastName = (data.last_name || "").trim();
+            const phone = (data.phone || "").trim();
+            const notes = (data.notes || "").trim();
+
+            if (!id || !firstName || !lastName) {
+                return new Response(
+                    JSON.stringify({ error: "Données obligatoires manquantes." }),
+                    {
+                        status: 400,
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+            }
+
+            await env.DB.prepare(
+                `UPDATE volunteers
+                 SET first_name = ?, last_name = ?, phone = ?, notes = ?
+                 WHERE id = ?`
+            )
+            .bind(firstName, lastName, phone, notes, id)
+            .run();
+
+            return new Response(
+                JSON.stringify({ success: true }),
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+        } catch {
+            return new Response(
+                JSON.stringify({ error: "Impossible de modifier le bénévole." }),
+                {
+                    status: 400,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+        }
+    }
+
+    if (request.method === "DELETE") {
+        try {
+            const data = await request.json();
+            const id = Number(data.id);
+
+            if (!id) {
+                return new Response(
+                    JSON.stringify({ error: "Identifiant du bénévole manquant." }),
+                    {
+                        status: 400,
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+            }
+
+            await env.DB.prepare(
+                "DELETE FROM volunteers WHERE id = ?"
+            )
+            .bind(id)
+            .run();
+
+            return new Response(
+                JSON.stringify({ success: true }),
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+        } catch {
+            return new Response(
+                JSON.stringify({ error: "Impossible de supprimer le bénévole." }),
                 {
                     status: 400,
                     headers: {
