@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>M’Essert Run — Espace bénévoles</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f1e8;
+        color: #202020;
+    }
+
+    header {
+        background: #202020;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    header img {
+        width: 150px;
+        max-width: 60%;
+    }
+
+    main {
+        max-width: 1000px;
+        margin: auto;
+        padding: 25px 20px 50px;
+    }
+
+    .welcome {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+        margin-bottom: 8px;
+    }
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+    }
+
+    .menu a {
+        display: block;
+        padding: 22px;
+        background: white;
+        border-radius: 14px;
+        text-decoration: none;
+        color: #202020;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .menu a span {
+        display: block;
+        font-size: 30px;
+        margin-bottom: 8px;
+    }
+
+    .admin {
+        margin-top: 30px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 14px;
+        border-left: 5px solid #b84b3f;
+    }
+
+    .admin h2 {
+        margin-top: 0;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo-messert-run.svg" alt="M’Essert Run">
+</header>
+
+<main>
+
+    <div class="welcome">
+        <h1>Espace bénévoles</h1>
+        <p>Bienvenue dans l'organisation de la M’Essert Run 2026.</p>
+    </div>
+
+    <div class="menu">
+
+        <a href="#">
+            <span>📅</span>
+            Planning général
+        </a>
+
+        <a href="#">
+            <span>👤</span>
+            Mon affectation
+        </a>
+
+        <a href="#">
+            <span>📋</span>
+            Missions
+        </a>
+
+        <a href="#">
+            <span>🗺️</span>
+            Carte des postes
+        </a>
+
+        <a href="#">
+            <span>📞</span>
+            Responsables
+        </a>
+
+        <a href="#">
+            <span>ℹ️</span>
+            Informations pratiques
+        </a>
+
+    </div>
+
+    <div class="admin" id="admin">
+        <h2>⚙️ Administration</h2>
+        <p>Espace réservé au comité.</p>
+    </div>
+
+</main>
+
+</body>
+</html>
