@@ -68,7 +68,8 @@
         cursor: pointer;
     }
 
-    #message {
+    #message,
+    #assignment-message {
         text-align: center;
         font-weight: bold;
         margin: 15px 0;
@@ -86,6 +87,8 @@
 
     <h1>📋 Gestion des missions</h1>
 
+    <!-- AJOUTER UNE MISSION -->
+
     <div class="box">
 
         <h2>Ajouter une mission</h2>
@@ -93,8 +96,7 @@
         <form id="mission-form">
 
             <label for="title">Mission / poste</label>
-            <input id="title" required
-                   placeholder="Ex. Service bar">
+            <input id="title" required placeholder="Ex. Service bar">
 
             <label for="category">Catégorie</label>
             <select id="category">
@@ -113,12 +115,10 @@
             </select>
 
             <label for="race">Course / épreuve</label>
-            <input id="race"
-                   placeholder="Ex. 10 km">
+            <input id="race" placeholder="Ex. 10 km">
 
             <label for="location">Lieu</label>
-            <input id="location"
-                   placeholder="Ex. Rond-Point / Seppe">
+            <input id="location" placeholder="Ex. Rond-Point / Seppe">
 
             <label for="start_time">Début</label>
             <input id="start_time" type="time">
@@ -127,15 +127,10 @@
             <input id="end_time" type="time">
 
             <label for="people_needed">Nombre de personnes</label>
-            <input id="people_needed"
-                   type="number"
-                   min="1"
-                   value="1">
+            <input id="people_needed" type="number" min="1" value="1">
 
             <label>
-                <input id="optional"
-                       type="checkbox"
-                       style="width:auto;">
+                <input id="optional" type="checkbox" style="width:auto;">
                 Mission facultative
             </label>
 
@@ -154,27 +149,32 @@
     <div id="message"></div>
 
 
-   <div class="box">
-    <h2>👥 Affecter un bénévole</h2>
+    <!-- AFFECTER UN BÉNÉVOLE -->
 
-    <label for="assignment-mission">Mission</label>
-    <select id="assignment-mission">
-        <option value="">— Choisir une mission —</option>
-    </select>
+    <div class="box">
 
-    <label for="assignment-volunteer">Bénévole</label>
-    <select id="assignment-volunteer">
-        <option value="">— Choisir un bénévole —</option>
-    </select>
+        <h2>👥 Affecter un bénévole</h2>
 
-    <button type="button" id="assign-button">
-        AFFECTER LE BÉNÉVOLE
-    </button>
+        <label for="assignment-mission">Mission</label>
 
-    <div id="assignment-message"></div>
-</div>
+        <select id="assignment-mission">
+            <option value="">— Choisir une mission —</option>
+        </select>
 
-   
+        <label for="assignment-volunteer">Bénévole</label>
+
+        <select id="assignment-volunteer">
+            <option value="">— Choisir un bénévole —</option>
+        </select>
+
+        <button type="button" id="assign-button">
+            AFFECTER LE BÉNÉVOLE
+        </button>
+
+        <div id="assignment-message"></div>
+
+    </div>
+
 
     <a href="qui-fait-quoi.html">
         ← Voir le planning
@@ -182,28 +182,127 @@
 
 </main>
 
-<script>
 
 <script>
 
-async function loadAssignmentLists() {
+/* =========================================================
+   CRÉATION D'UNE MISSION
+   ========================================================= */
 
-    const missionSelect = document.getElementById("assignment-mission");
-    const volunteerSelect = document.getElementById("assignment-volunteer");
+document.getElementById("mission-form").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const data = {
+
+        title: document.getElementById("title").value,
+        category: document.getElementById("category").value,
+        race: document.getElementById("race").value,
+        location: document.getElementById("location").value,
+        start_time: document.getElementById("start_time").value,
+        end_time: document.getElementById("end_time").value,
+        people_needed: document.getElementById("people_needed").value,
+        optional: document.getElementById("optional").checked,
+        instructions: document.getElementById("instructions").value
+
+    };
 
     try {
 
-        const [missionsResponse, volunteersResponse] = await Promise.all([
+        const response = await fetch("/api/missions", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(data)
+
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            document.getElementById("message").textContent =
+                "✅ Mission ajoutée.";
+
+            this.reset();
+
+            document.getElementById("people_needed").value = 1;
+
+            await loadAssignmentLists();
+
+        } else {
+
+            document.getElementById("message").textContent =
+                result.error || "Une erreur est survenue.";
+
+        }
+
+    } catch {
+
+        document.getElementById("message").textContent =
+            "Impossible de communiquer avec le serveur.";
+
+    }
+
+});
+
+
+/* =========================================================
+   CHARGEMENT DES MISSIONS ET BÉNÉVOLES
+   ========================================================= */
+
+async function loadAssignmentLists() {
+
+    const missionSelect =
+        document.getElementById("assignment-mission");
+
+    const volunteerSelect =
+        document.getElementById("assignment-volunteer");
+
+    try {
+
+        const [
+            missionsResponse,
+            volunteersResponse
+        ] = await Promise.all([
+
             fetch("/api/missions"),
             fetch("/api/volunteers")
+
         ]);
 
-        const missions = await missionsResponse.json();
-        const volunteers = await volunteersResponse.json();
+        if (!missionsResponse.ok || !volunteersResponse.ok) {
+
+            throw new Error("Erreur API");
+
+        }
+
+        const missions =
+            await missionsResponse.json();
+
+        const volunteers =
+            await volunteersResponse.json();
+
+
+        /* Réinitialiser les listes */
+
+        missionSelect.innerHTML =
+            '<option value="">— Choisir une mission —</option>';
+
+        volunteerSelect.innerHTML =
+            '<option value="">— Choisir un bénévole —</option>';
+
+
+        /* Ajouter les missions */
 
         missions.forEach(mission => {
 
-            const option = document.createElement("option");
+            const option =
+                document.createElement("option");
 
             option.value = mission.id;
 
@@ -211,11 +310,16 @@ async function loadAssignmentLists() {
                 `${mission.start_time || ""} — ${mission.title}`;
 
             missionSelect.appendChild(option);
+
         });
+
+
+        /* Ajouter les bénévoles */
 
         volunteers.forEach(volunteer => {
 
-            const option = document.createElement("option");
+            const option =
+                document.createElement("option");
 
             option.value = volunteer.id;
 
@@ -223,6 +327,7 @@ async function loadAssignmentLists() {
                 `${volunteer.first_name} ${volunteer.last_name}`;
 
             volunteerSelect.appendChild(option);
+
         });
 
     } catch (error) {
@@ -231,8 +336,13 @@ async function loadAssignmentLists() {
             "Impossible de charger les missions ou les bénévoles.";
 
     }
+
 }
 
+
+/* =========================================================
+   AFFECTATION D'UN BÉNÉVOLE
+   ========================================================= */
 
 document.getElementById("assign-button").addEventListener("click", async function() {
 
@@ -245,35 +355,50 @@ document.getElementById("assign-button").addEventListener("click", async functio
     const message =
         document.getElementById("assignment-message");
 
+
     if (!missionId || !volunteerId) {
 
         message.textContent =
             "Choisissez une mission et un bénévole.";
 
         return;
+
     }
+
 
     try {
 
-        const response = await fetch("/api/assignments", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                mission_id: missionId,
-                volunteer_id: volunteerId
-            })
-        });
+        const response =
+            await fetch("/api/assignments", {
 
-        const result = await response.json();
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    mission_id: missionId,
+                    volunteer_id: volunteerId
+
+                })
+
+            });
+
+
+        const result =
+            await response.json();
+
 
         if (result.success) {
 
             message.textContent =
                 "✅ Bénévole affecté à la mission.";
 
-            document.getElementById("assignment-volunteer").value = "";
+            document.getElementById(
+                "assignment-volunteer"
+            ).value = "";
 
         } else {
 
@@ -288,14 +413,16 @@ document.getElementById("assign-button").addEventListener("click", async functio
             "Impossible de communiquer avec le serveur.";
 
     }
+
 });
 
 
+/* =========================================================
+   INITIALISATION
+   ========================================================= */
+
 loadAssignmentLists();
 
-</script>
-
-   
 </script>
 
 </body>
