@@ -6,10 +6,11 @@ export async function onRequest(context) {
         const { results } = await env.DB.prepare(
             `SELECT
                 assignments.id,
-                assignments.mission_id,
-                assignments.volunteer_id,
-                volunteers.first_name,
-                volunteers.last_name
+assignments.mission_id,
+assignments.volunteer_id,
+volunteers.first_name,
+volunteers.last_name,
+volunteers.phone
              FROM assignments
              JOIN volunteers
                 ON volunteers.id = assignments.volunteer_id
