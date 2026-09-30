@@ -45,13 +45,35 @@ export async function onRequest(context) {
                 );
             }
 
-            await env.DB.prepare(
-                `INSERT INTO assignments
-                (mission_id, volunteer_id)
-                VALUES (?, ?)`
-            )
-            .bind(missionId, volunteerId)
-            .run();
+            const existing = await env.DB.prepare(
+    `SELECT id
+     FROM assignments
+     WHERE mission_id = ? AND volunteer_id = ?`
+)
+.bind(missionId, volunteerId)
+.first();
+
+if (existing) {
+    return new Response(
+        JSON.stringify({
+            error: "Ce bénévole est déjà affecté à cette mission."
+        }),
+        {
+            status: 409,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    );
+}
+
+await env.DB.prepare(
+    `INSERT INTO assignments
+    (mission_id, volunteer_id)
+    VALUES (?, ?)`
+)
+.bind(missionId, volunteerId)
+.run();
 
             return new Response(
                 JSON.stringify({
