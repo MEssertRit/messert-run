@@ -201,19 +201,13 @@
 
 </main>
 
-
 <script>
-
-/* =========================================================
-   CRÉATION D'UNE MISSION
-   ========================================================= */
 
 document.getElementById("mission-form").addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
     const data = {
-
         title: document.getElementById("title").value,
         category: document.getElementById("category").value,
         race: document.getElementById("race").value,
@@ -223,21 +217,16 @@ document.getElementById("mission-form").addEventListener("submit", async functio
         people_needed: document.getElementById("people_needed").value,
         optional: document.getElementById("optional").checked,
         instructions: document.getElementById("instructions").value
-
     };
 
     try {
 
         const response = await fetch("/api/missions", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify(data)
-
         });
 
         const result = await response.json();
@@ -270,10 +259,6 @@ document.getElementById("mission-form").addEventListener("submit", async functio
 });
 
 
-/* =========================================================
-   CHARGEMENT DES MISSIONS ET BÉNÉVOLES
-   ========================================================= */
-
 async function loadAssignmentLists() {
 
     const missionSelect =
@@ -282,32 +267,33 @@ async function loadAssignmentLists() {
     const volunteerSelect =
         document.getElementById("assignment-volunteer");
 
+    const assignmentsContainer =
+        document.getElementById("current-assignments");
+
     try {
 
         const [
             missionsResponse,
-            volunteersResponse
+            volunteersResponse,
+            assignmentsResponse
         ] = await Promise.all([
-
             fetch("/api/missions"),
-            fetch("/api/volunteers")
-
+            fetch("/api/volunteers"),
+            fetch("/api/assignments")
         ]);
 
-        if (!missionsResponse.ok || !volunteersResponse.ok) {
-
+        if (
+            !missionsResponse.ok ||
+            !volunteersResponse.ok ||
+            !assignmentsResponse.ok
+        ) {
             throw new Error("Erreur API");
-
         }
 
-        const missions =
-            await missionsResponse.json();
+        const missions = await missionsResponse.json();
+        const volunteers = await volunteersResponse.json();
+        const assignments = await assignmentsResponse.json();
 
-        const volunteers =
-            await volunteersResponse.json();
-
-
-        /* Réinitialiser les listes */
 
         missionSelect.innerHTML =
             '<option value="">— Choisir une mission —</option>';
@@ -316,12 +302,9 @@ async function loadAssignmentLists() {
             '<option value="">— Choisir un bénévole —</option>';
 
 
-        /* Ajouter les missions */
-
         missions.forEach(mission => {
 
-            const option =
-                document.createElement("option");
+            const option = document.createElement("option");
 
             option.value = mission.id;
 
@@ -333,12 +316,9 @@ async function loadAssignmentLists() {
         });
 
 
-        /* Ajouter les bénévoles */
-
         volunteers.forEach(volunteer => {
 
-            const option =
-                document.createElement("option");
+            const option = document.createElement("option");
 
             option.value = volunteer.id;
 
@@ -349,19 +329,128 @@ async function loadAssignmentLists() {
 
         });
 
-    } catch (error) {
 
-        document.getElementById("assignment-message").textContent =
-            "Impossible de charger les missions ou les bénévoles.";
+        assignmentsContainer.innerHTML = "";
+
+
+        if (assignments.length === 0) {
+
+            assignmentsContainer.innerHTML =
+                "<p>Aucune affectation pour le moment.</p>";
+
+        } else {
+
+            assignments.forEach(assignment => {
+
+                const mission =
+                    missions.find(
+                        m => Number(m.id) === Number(assignment.mission_id)
+                    );
+
+                const box =
+                    document.createElement("div");
+
+                box.style.padding = "12px";
+                box.style.marginBottom = "10px";
+                box.style.background = "#f5f1e8";
+                box.style.borderRadius = "10px";
+
+
+                const missionName =
+                    mission
+                        ? mission.title
+                        : "Mission inconnue";
+
+
+                box.innerHTML = `
+
+                    <strong>${missionName}</strong>
+
+                    <div style="margin-top:6px;">
+                        👤 ${assignment.first_name}
+                        ${assignment.last_name}
+                    </div>
+
+                    <button
+                        type="button"
+                        style="
+                            width:auto;
+                            margin-top:10px;
+                            padding:8px 12px;
+                            background:#777;
+                        "
+                        onclick="deleteAssignment(${assignment.id})"
+                    >
+                        🗑️ Retirer
+                    </button>
+
+                `;
+
+                assignmentsContainer.appendChild(box);
+
+            });
+
+        }
+
+    } catch {
+
+        assignmentsContainer.innerHTML =
+            "<p>Impossible de charger les affectations.</p>";
 
     }
 
 }
 
 
-/* =========================================================
-   AFFECTATION D'UN BÉNÉVOLE
-   ========================================================= */
+async function deleteAssignment(id) {
+
+    if (!confirm("Retirer ce bénévole de cette mission ?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch("/api/assignments", {
+
+            method: "DELETE",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                id: id
+            })
+
+        });
+
+
+        const result = await response.json();
+
+
+        if (result.success) {
+
+            await loadAssignmentLists();
+
+        } else {
+
+            alert(
+                result.error ||
+                "Impossible de supprimer l'affectation."
+            );
+
+        }
+
+    } catch {
+
+        alert(
+            "Impossible de communiquer avec le serveur."
+        );
+
+    }
+
+}
+
 
 document.getElementById("assign-button").addEventListener("click", async function() {
 
@@ -387,27 +476,23 @@ document.getElementById("assign-button").addEventListener("click", async functio
 
     try {
 
-        const response =
-            await fetch("/api/assignments", {
+        const response = await fetch("/api/assignments", {
 
-                method: "POST",
+            method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                body: JSON.stringify({
+            body: JSON.stringify({
+                mission_id: missionId,
+                volunteer_id: volunteerId
+            })
 
-                    mission_id: missionId,
-                    volunteer_id: volunteerId
-
-                })
-
-            });
+        });
 
 
-        const result =
-            await response.json();
+        const result = await response.json();
 
 
         if (result.success) {
@@ -418,6 +503,8 @@ document.getElementById("assign-button").addEventListener("click", async functio
             document.getElementById(
                 "assignment-volunteer"
             ).value = "";
+
+            await loadAssignmentLists();
 
         } else {
 
@@ -436,13 +523,11 @@ document.getElementById("assign-button").addEventListener("click", async functio
 });
 
 
-/* =========================================================
-   INITIALISATION
-   ========================================================= */
-
 loadAssignmentLists();
 
 </script>
+
+
 
 </body>
 </html>
