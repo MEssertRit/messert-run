@@ -153,6 +153,29 @@
 
     <div id="message"></div>
 
+
+   <div class="box">
+    <h2>👥 Affecter un bénévole</h2>
+
+    <label for="assignment-mission">Mission</label>
+    <select id="assignment-mission">
+        <option value="">— Choisir une mission —</option>
+    </select>
+
+    <label for="assignment-volunteer">Bénévole</label>
+    <select id="assignment-volunteer">
+        <option value="">— Choisir un bénévole —</option>
+    </select>
+
+    <button type="button" id="assign-button">
+        AFFECTER LE BÉNÉVOLE
+    </button>
+
+    <div id="assignment-message"></div>
+</div>
+
+   
+
     <a href="qui-fait-quoi.html">
         ← Voir le planning
     </a>
@@ -161,84 +184,118 @@
 
 <script>
 
-document
-.getElementById("mission-form")
-.addEventListener("submit", async function(event) {
+<script>
 
-    event.preventDefault();
+async function loadAssignmentLists() {
 
-    const data = {
-
-        title:
-            document.getElementById("title").value,
-
-        category:
-            document.getElementById("category").value,
-
-        race:
-            document.getElementById("race").value,
-
-        location:
-            document.getElementById("location").value,
-
-        start_time:
-            document.getElementById("start_time").value,
-
-        end_time:
-            document.getElementById("end_time").value,
-
-        people_needed:
-            document.getElementById("people_needed").value,
-
-        optional:
-            document.getElementById("optional").checked,
-
-        instructions:
-            document.getElementById("instructions").value
-
-    };
+    const missionSelect = document.getElementById("assignment-mission");
+    const volunteerSelect = document.getElementById("assignment-volunteer");
 
     try {
 
-        const response = await fetch("/api/missions", {
+        const [missionsResponse, volunteersResponse] = await Promise.all([
+            fetch("/api/missions"),
+            fetch("/api/volunteers")
+        ]);
 
+        const missions = await missionsResponse.json();
+        const volunteers = await volunteersResponse.json();
+
+        missions.forEach(mission => {
+
+            const option = document.createElement("option");
+
+            option.value = mission.id;
+
+            option.textContent =
+                `${mission.start_time || ""} — ${mission.title}`;
+
+            missionSelect.appendChild(option);
+        });
+
+        volunteers.forEach(volunteer => {
+
+            const option = document.createElement("option");
+
+            option.value = volunteer.id;
+
+            option.textContent =
+                `${volunteer.first_name} ${volunteer.last_name}`;
+
+            volunteerSelect.appendChild(option);
+        });
+
+    } catch (error) {
+
+        document.getElementById("assignment-message").textContent =
+            "Impossible de charger les missions ou les bénévoles.";
+
+    }
+}
+
+
+document.getElementById("assign-button").addEventListener("click", async function() {
+
+    const missionId =
+        document.getElementById("assignment-mission").value;
+
+    const volunteerId =
+        document.getElementById("assignment-volunteer").value;
+
+    const message =
+        document.getElementById("assignment-message");
+
+    if (!missionId || !volunteerId) {
+
+        message.textContent =
+            "Choisissez une mission et un bénévole.";
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch("/api/assignments", {
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
-            body: JSON.stringify(data)
-
+            body: JSON.stringify({
+                mission_id: missionId,
+                volunteer_id: volunteerId
+            })
         });
 
         const result = await response.json();
 
         if (result.success) {
 
-            document.getElementById("message").textContent =
-                "Mission ajoutée.";
+            message.textContent =
+                "✅ Bénévole affecté à la mission.";
 
-            this.reset();
-
-            document.getElementById("people_needed").value = 1;
+            document.getElementById("assignment-volunteer").value = "";
 
         } else {
 
-            document.getElementById("message").textContent =
+            message.textContent =
                 result.error || "Une erreur est survenue.";
 
         }
 
     } catch {
 
-        document.getElementById("message").textContent =
+        message.textContent =
             "Impossible de communiquer avec le serveur.";
 
     }
-
 });
 
+
+loadAssignmentLists();
+
+</script>
+
+   
 </script>
 
 </body>
