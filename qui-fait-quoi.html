@@ -1,1 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M’Essert Run — Qui fait quoi ?</title>
 
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f1e8;
+    color: #202020;
+}
+
+header {
+    background: #202020;
+    padding: 20px;
+    text-align: center;
+}
+
+header img {
+    width: 130px;
+    max-width: 55%;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 50px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.intro {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.mission {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.mission-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+}
+
+.mission h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.time {
+    font-weight: bold;
+    white-space: nowrap;
+    color: #b84b3f;
+}
+
+.details {
+    margin-top: 10px;
+    color: #555;
+}
+
+.people {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    font-weight: bold;
+}
+
+.empty {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: #202020;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.loading {
+    text-align: center;
+    padding: 30px;
+}
+
+@media (max-width: 600px) {
+    .mission-header {
+        display: block;
+    }
+
+    .time {
+        display: block;
+        margin-top: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo-messert-run.svg" alt="M’Essert Run">
+</header>
+
+<main>
+
+    <h1>👥 Qui fait quoi ?</h1>
+
+    <p class="intro">
+        Retrouvez ici les missions, les horaires et les bénévoles affectés.
+    </p>
+
+    <div id="missions" class="loading">
+        Chargement...
+    </div>
+
+    <a class="back" href="espace-benevoles.html">
+        ← Retour à l’espace bénévoles
+    </a>
+
+</main>
+
+<script>
+
+async function loadMissions() {
+
+    const container = document.getElementById("missions");
+
+    try {
+
+        const response = await fetch("/api/missions");
+
+        if (!response.ok) {
+            throw new Error("Erreur API");
+        }
+
+        const missions = await response.json();
+
+        container.innerHTML = "";
+
+        if (missions.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    Aucune mission n'est encore enregistrée.
+                </div>
+            `;
+
+            return;
+        }
+
+        missions.forEach(mission => {
+
+            const card = document.createElement("div");
+
+            card.className = "mission";
+
+            const time = mission.start_time
+                ? `${mission.start_time}${mission.end_time ? " → " + mission.end_time : ""}`
+                : "";
+
+            card.innerHTML = `
+                <div class="mission-header">
+                    <h2>${mission.title}</h2>
+                    <span class="time">${time}</span>
+                </div>
+
+                ${mission.race
+                    ? `<div class="details">🏃 ${mission.race}</div>`
+                    : ""
+                }
+
+                ${mission.location
+                    ? `<div class="details">📍 ${mission.location}</div>`
+                    : ""
+                }
+
+                <div class="people">
+                    👤 ${mission.people_needed || 1} personne(s) à prévoir
+                </div>
+
+                ${mission.optional
+                    ? `<div class="details">ℹ️ Mission facultative</div>`
+                    : ""
+                }
+
+                ${mission.instructions
+                    ? `<div class="details">📝 ${mission.instructions}</div>`
+                    : ""
+                }
+            `;
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Impossible de charger les missions.
+            </div>
+        `;
+
+    }
+}
+
+loadMissions();
+
+</script>
+
+</body>
+</html>
