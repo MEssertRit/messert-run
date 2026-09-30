@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>M’Essert Run — Qui fait quoi ?</title>
 
 <style>
@@ -80,7 +81,25 @@ h1 {
     margin-top: 15px;
     padding-top: 12px;
     border-top: 1px solid #eee;
+}
+
+.people-title {
     font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.person {
+    display: inline-block;
+    background: #f5f1e8;
+    border-radius: 20px;
+    padding: 7px 12px;
+    margin: 3px 5px 3px 0;
+    font-weight: bold;
+}
+
+.no-person {
+    color: #777;
+    font-style: italic;
 }
 
 .empty {
@@ -104,7 +123,8 @@ h1 {
     padding: 30px;
 }
 
-@media (max-width: 600px) {
+@media(max-width:600px) {
+
     .mission-header {
         display: block;
     }
@@ -145,19 +165,34 @@ h1 {
 
 async function loadMissions() {
 
-    const container = document.getElementById("missions");
+    const container =
+        document.getElementById("missions");
 
     try {
 
-        const response = await fetch("/api/missions");
+        const [
+            missionsResponse,
+            assignmentsResponse
+        ] = await Promise.all([
 
-        if (!response.ok) {
+            fetch("/api/missions"),
+            fetch("/api/assignments")
+
+        ]);
+
+        if (!missionsResponse.ok || !assignmentsResponse.ok) {
             throw new Error("Erreur API");
         }
 
-        const missions = await response.json();
+        const missions =
+            await missionsResponse.json();
+
+        const assignments =
+            await assignmentsResponse.json();
+
 
         container.innerHTML = "";
+
 
         if (missions.length === 0) {
 
@@ -170,49 +205,108 @@ async function loadMissions() {
             return;
         }
 
+
         missions.forEach(mission => {
 
-            const card = document.createElement("div");
+            const card =
+                document.createElement("div");
 
             card.className = "mission";
 
-            const time = mission.start_time
-                ? `${mission.start_time}${mission.end_time ? " → " + mission.end_time : ""}`
-                : "";
+
+            const time =
+                mission.start_time
+                    ? `${mission.start_time}${mission.end_time ? " → " + mission.end_time : ""}`
+                    : "";
+
+
+            const missionAssignments =
+                assignments.filter(
+                    assignment =>
+                        Number(assignment.mission_id) === Number(mission.id)
+                );
+
+
+            let peopleHtml = "";
+
+
+            if (missionAssignments.length > 0) {
+
+                peopleHtml = missionAssignments
+                    .map(assignment => `
+                        <span class="person">
+                            👤 ${assignment.first_name} ${assignment.last_name}
+                        </span>
+                    `)
+                    .join("");
+
+            } else {
+
+                peopleHtml = `
+                    <span class="no-person">
+                        Aucun bénévole affecté pour le moment
+                    </span>
+                `;
+
+            }
+
 
             card.innerHTML = `
+
                 <div class="mission-header">
-                    <h2>${mission.title}</h2>
-                    <span class="time">${time}</span>
+
+                    <h2>
+                        ${mission.title}
+                    </h2>
+
+                    <span class="time">
+                        ${time}
+                    </span>
+
                 </div>
+
 
                 ${mission.race
                     ? `<div class="details">🏃 ${mission.race}</div>`
                     : ""
                 }
 
+
                 ${mission.location
                     ? `<div class="details">📍 ${mission.location}</div>`
                     : ""
                 }
 
+
                 <div class="people">
-                    👤 ${mission.people_needed || 1} personne(s) à prévoir
+
+                    <div class="people-title">
+                        👥 Bénévoles affectés
+                    </div>
+
+                    ${peopleHtml}
+
                 </div>
+
 
                 ${mission.optional
                     ? `<div class="details">ℹ️ Mission facultative</div>`
                     : ""
                 }
 
+
                 ${mission.instructions
                     ? `<div class="details">📝 ${mission.instructions}</div>`
                     : ""
                 }
+
             `;
 
+
             container.appendChild(card);
+
         });
+
 
     } catch (error) {
 
@@ -223,7 +317,9 @@ async function loadMissions() {
         `;
 
     }
+
 }
+
 
 loadMissions();
 
