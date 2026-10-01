@@ -347,10 +347,10 @@ card.className = event.race === true ? "event race" : "event";
                         }
 
                         ${
-                            event.race
-                            ? `<div class="details">🏃 ${event.race}</div>`
-                            : ""
-                        }
+    typeof event.race === "string"
+    ? `<div class="details">🏃 ${event.race}</div>`
+    : ""
+}
 
                         ${
                             event.location
