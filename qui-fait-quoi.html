@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
 <title>M’Essert Run — Qui fait quoi ?</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -30,83 +32,93 @@ header img {
 }
 
 main {
-    max-width: 1100px;
+    max-width: 900px;
     margin: auto;
     padding: 25px 20px 50px;
 }
 
-h1 {
+.title {
     text-align: center;
-    margin-bottom: 10px;
-}
-
-.intro {
-    text-align: center;
-    color: #666;
     margin-bottom: 30px;
 }
 
-.mission {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+.title h1 {
+    margin-bottom: 8px;
 }
 
-.mission-header {
+.title p {
+    color: #666;
+}
+
+.volunteer-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.volunteer-header {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
     align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
-.mission h2 {
-    margin: 0;
-    font-size: 20px;
+.volunteer-name {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.phone {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.mission {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #eee;
+}
+
+.mission:first-child {
+    border-top: 0;
 }
 
 .time {
     font-weight: bold;
-    white-space: nowrap;
-    color: #b84b3f;
+    font-size: 16px;
+}
+
+.category {
+    font-size: 12px;
+    color: #777;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.mission-title {
+    font-size: 17px;
+    font-weight: bold;
 }
 
 .details {
-    margin-top: 10px;
-    color: #555;
-}
-
-.people {
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px solid #eee;
-}
-
-.people-title {
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.person {
-    display: inline-block;
-    background: #f5f1e8;
-    border-radius: 20px;
-    padding: 7px 12px;
-    margin: 3px 5px 3px 0;
-    font-weight: bold;
-}
-
-.no-person {
-    color: #777;
-    font-style: italic;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #666;
 }
 
 .empty {
     background: white;
     padding: 25px;
-    border-radius: 14px;
+    border-radius: 16px;
     text-align: center;
+    color: #777;
 }
 
 .back {
@@ -118,22 +130,28 @@ h1 {
     font-weight: bold;
 }
 
-.loading {
-    text-align: center;
-    padding: 30px;
-}
+@media (max-width: 600px) {
 
-@media(max-width:600px) {
+    main {
+        padding: 20px 14px 40px;
+    }
 
-    .mission-header {
+    .volunteer-header {
         display: block;
     }
 
-    .time {
-        display: block;
-        margin-top: 8px;
+    .phone {
+        display: inline-block;
+        margin-top: 6px;
     }
+
+    .mission {
+        grid-template-columns: 60px 1fr;
+        gap: 8px;
+    }
+
 }
+
 </style>
 </head>
 
@@ -145,13 +163,15 @@ h1 {
 
 <main>
 
-    <h1>👥 Qui fait quoi ?</h1>
+    <div class="title">
+        <h1>👥 Qui fait quoi ?</h1>
+        <p>
+            Retrouvez les missions de chaque bénévole,
+            dans l’ordre de la journée.
+        </p>
+    </div>
 
-    <p class="intro">
-        Retrouvez ici les missions, les horaires et les bénévoles affectés.
-    </p>
-
-    <div id="missions" class="loading">
+    <div id="volunteers">
         Chargement...
     </div>
 
@@ -161,28 +181,40 @@ h1 {
 
 </main>
 
+
 <script>
 
-async function loadMissions() {
+async function loadVolunteers() {
 
     const container =
-        document.getElementById("missions");
+        document.getElementById("volunteers");
 
     try {
 
         const [
+            volunteersResponse,
             missionsResponse,
             assignmentsResponse
         ] = await Promise.all([
 
+            fetch("/api/volunteers"),
             fetch("/api/missions"),
             fetch("/api/assignments")
 
         ]);
 
-        if (!missionsResponse.ok || !assignmentsResponse.ok) {
-            throw new Error("Erreur API");
+
+        if (
+            !volunteersResponse.ok ||
+            !missionsResponse.ok ||
+            !assignmentsResponse.ok
+        ) {
+            throw new Error();
         }
+
+
+        const volunteers =
+            await volunteersResponse.json();
 
         const missions =
             await missionsResponse.json();
@@ -191,14 +223,30 @@ async function loadMissions() {
             await assignmentsResponse.json();
 
 
+        /*
+         * On ne garde que les bénévoles
+         * ayant au moins une mission.
+         */
+
+        const activeVolunteers =
+            volunteers.filter(volunteer =>
+                assignments.some(
+                    assignment =>
+                        Number(assignment.volunteer_id)
+                        === Number(volunteer.id)
+                )
+            );
+
+
         container.innerHTML = "";
 
 
-        if (missions.length === 0) {
+        if (activeVolunteers.length === 0) {
 
             container.innerHTML = `
                 <div class="empty">
-                    Aucune mission n'est encore enregistrée.
+                    Aucun bénévole n'est encore affecté
+                    à une mission.
                 </div>
             `;
 
@@ -206,99 +254,167 @@ async function loadMissions() {
         }
 
 
-        missions.forEach(mission => {
+        /*
+         * Tri alphabétique des bénévoles
+         */
+
+        activeVolunteers.sort((a, b) => {
+
+            const nameA =
+                `${a.last_name} ${a.first_name}`;
+
+            const nameB =
+                `${b.last_name} ${b.first_name}`;
+
+            return nameA.localeCompare(
+                nameB,
+                "fr"
+            );
+
+        });
+
+
+        activeVolunteers.forEach(volunteer => {
+
+            const volunteerAssignments =
+                assignments
+                    .filter(
+                        assignment =>
+                            Number(
+                                assignment.volunteer_id
+                            )
+                            === Number(volunteer.id)
+                    )
+                    .map(assignment => {
+
+                        const mission =
+                            missions.find(
+                                m =>
+                                    Number(m.id)
+                                    === Number(
+                                        assignment.mission_id
+                                    )
+                            );
+
+                        return {
+                            assignment,
+                            mission
+                        };
+
+                    })
+                    .filter(item => item.mission)
+                    .sort((a, b) =>
+                        (a.mission.start_time || "")
+                            .localeCompare(
+                                b.mission.start_time || ""
+                            )
+                    );
+
 
             const card =
                 document.createElement("div");
 
-            card.className = "mission";
+            card.className =
+                "volunteer-card";
 
 
-            const time =
-                mission.start_time
-                    ? `${mission.start_time}${mission.end_time ? " → " + mission.end_time : ""}`
+            const phone =
+                volunteer.phone
+                    ? `
+                        <a
+                            class="phone"
+                            href="tel:${volunteer.phone}"
+                        >
+                            📞 ${volunteer.phone}
+                        </a>
+                      `
                     : "";
-
-
-            const missionAssignments =
-                assignments.filter(
-                    assignment =>
-                        Number(assignment.mission_id) === Number(mission.id)
-                );
-
-
-            let peopleHtml = "";
-
-
-            if (missionAssignments.length > 0) {
-
-                peopleHtml = missionAssignments
-                    .map(assignment => `
-                        <span class="person">
-                            👤 ${assignment.first_name} ${assignment.last_name}
-                        </span>
-                    `)
-                    .join("");
-
-            } else {
-
-                peopleHtml = `
-                    <span class="no-person">
-                        Aucun bénévole affecté pour le moment
-                    </span>
-                `;
-
-            }
 
 
             card.innerHTML = `
 
-                <div class="mission-header">
+                <div class="volunteer-header">
 
-                    <h2>
-                        ${mission.title}
-                    </h2>
-
-                    <span class="time">
-                        ${time}
-                    </span>
-
-                </div>
-
-
-                ${mission.race
-                    ? `<div class="details">🏃 ${mission.race}</div>`
-                    : ""
-                }
-
-
-                ${mission.location
-                    ? `<div class="details">📍 ${mission.location}</div>`
-                    : ""
-                }
-
-
-                <div class="people">
-
-                    <div class="people-title">
-                        👥 Bénévoles affectés
+                    <div class="volunteer-name">
+                        👤 ${volunteer.first_name}
+                        ${volunteer.last_name}
                     </div>
 
-                    ${peopleHtml}
+                    ${phone}
 
                 </div>
 
 
-                ${mission.optional
-                    ? `<div class="details">ℹ️ Mission facultative</div>`
-                    : ""
-                }
+                <div>
+
+                    ${volunteerAssignments.map(item => {
+
+                        const mission =
+                            item.mission;
+
+                        const time =
+                            mission.start_time
+                                ? `${mission.start_time}${mission.end_time ? " → " + mission.end_time : ""}`
+                                : "—";
 
 
-                ${mission.instructions
-                    ? `<div class="details">📝 ${mission.instructions}</div>`
-                    : ""
-                }
+                        return `
+
+                            <div class="mission">
+
+                                <div class="time">
+                                    ${time}
+                                </div>
+
+                                <div>
+
+                                    <div class="category">
+                                        ${mission.category || ""}
+                                    </div>
+
+                                    <div class="mission-title">
+                                        ${mission.title}
+                                    </div>
+
+                                    ${
+                                        mission.location
+                                            ? `
+                                            <div class="details">
+                                                📍 ${mission.location}
+                                            </div>
+                                            `
+                                            : ""
+                                    }
+
+                                    ${
+                                        mission.race
+                                            ? `
+                                            <div class="details">
+                                                🏃 ${mission.race}
+                                            </div>
+                                            `
+                                            : ""
+                                    }
+
+                                    ${
+                                        mission.instructions
+                                            ? `
+                                            <div class="details">
+                                                📝 ${mission.instructions}
+                                            </div>
+                                            `
+                                            : ""
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }).join("")}
+
+                </div>
 
             `;
 
@@ -308,11 +424,11 @@ async function loadMissions() {
         });
 
 
-    } catch (error) {
+    } catch {
 
         container.innerHTML = `
             <div class="empty">
-                Impossible de charger les missions.
+                Impossible de charger les affectations.
             </div>
         `;
 
@@ -321,7 +437,7 @@ async function loadMissions() {
 }
 
 
-loadMissions();
+loadVolunteers();
 
 </script>
 
