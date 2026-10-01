@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M’Essert Run — Administration</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f1e8;
+    color: #202020;
+}
+
+header {
+    background: #202020;
+    padding: 20px;
+    text-align: center;
+}
+
+header img {
+    width: 130px;
+    max-width: 55%;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 20px 50px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title h1 {
+    margin-bottom: 8px;
+}
+
+.title p {
+    color: #666;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+.card p {
+    color: #666;
+    line-height: 1.5;
+}
+
+.button {
+    display: block;
+    margin-top: 18px;
+    padding: 13px 16px;
+    background: #b84b3f;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.button.secondary {
+    background: #202020;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: #202020;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 650px) {
+
+    main {
+        padding: 25px 14px 40px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo-messert-run.svg" alt="M’Essert Run">
+</header>
+
+<main>
+
+    <div class="title">
+        <h1>⚙️ Administration</h1>
+        <p>Espace réservé au comité — M’Essert Run 2026</p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>📋 Missions</h2>
+
+            <p>
+                Créer, modifier ou supprimer les missions
+                des bénévoles.
+            </p>
+
+            <a href="admin-missions.html" class="button">
+                GÉRER LES MISSIONS
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>👥 Bénévoles</h2>
+
+            <p>
+                Ajouter les bénévoles et modifier
+                leurs coordonnées.
+            </p>
+
+            <a href="admin-benevoles.html" class="button">
+                GÉRER LES BÉNÉVOLES
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>🔗 Affectations</h2>
+
+            <p>
+                Affecter les bénévoles aux différentes
+                missions et gérer les affectations.
+            </p>
+
+            <a href="admin-missions.html#affectations" class="button">
+                GÉRER LES AFFECTATIONS
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>📅 Planning</h2>
+
+            <p>
+                Consulter le planning général avec
+                les missions et les bénévoles affectés.
+            </p>
+
+            <a href="planning.html" class="button secondary">
+                VOIR LE PLANNING
+            </a>
+        </div>
+
+    </div>
+
+    <a class="back" href="espace-benevoles.html">
+        ← Retour à l’espace bénévoles
+    </a>
+
+</main>
+
+</body>
+</html>
