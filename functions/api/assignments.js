@@ -2,27 +2,36 @@ export async function onRequest(context) {
     const { request, env } = context;
 
     // Voir toutes les affectations avec les noms des bénévoles
-    if (request.method === "GET") {
-        const { results } = await env.DB.prepare(
-            `SELECT
-                assignments.id,
-assignments.mission_id,
-assignments.volunteer_id,
-volunteers.first_name,
-volunteers.last_name,
-volunteers.phone
-             FROM assignments
-             JOIN volunteers
-                ON volunteers.id = assignments.volunteer_id
-             ORDER BY assignments.mission_id, volunteers.last_name, volunteers.first_name`
-        ).all();
+   // Voir toutes les affectations avec les informations de mission et du bénévole
+if (request.method === "GET") {
+    const { results } = await env.DB.prepare(
+        `SELECT
+            assignments.id,
+            assignments.mission_id,
+            assignments.volunteer_id,
+            missions.title AS mission_title,
+            missions.category,
+            missions.start_time,
+            missions.end_time,
+            missions.location,
+            missions.race,
+            volunteers.first_name,
+            volunteers.last_name,
+            volunteers.phone
+         FROM assignments
+         JOIN missions
+            ON missions.id = assignments.mission_id
+         JOIN volunteers
+            ON volunteers.id = assignments.volunteer_id
+         ORDER BY missions.start_time, missions.title, volunteers.last_name, volunteers.first_name`
+    ).all();
 
-        return new Response(JSON.stringify(results), {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-    }
+    return new Response(JSON.stringify(results), {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+}
 
     // Affecter un bénévole à une mission
     if (request.method === "POST") {
