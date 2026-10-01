@@ -206,24 +206,28 @@ const fixedEvents = [
         category: "🚶 COURSE",
         title: "Départ de la Marche",
         details: "5,8 km — route ouverte, pas de signaleurs"
+       race: true,
     },
     {
         start_time: "09:00",
         category: "🐢 COURSE",
         title: "Course de la Tortue",
         details: "900 m"
+       race: true,
     },
     {
         start_time: "09:15",
         category: "🐇 COURSE",
         title: "Course du Lièvre",
         details: "2,4 km"
+       race: true,
     },
     {
         start_time: "09:45",
         category: "🔴 COURSE",
         title: "Course 10 km",
         details: "10 km"
+       race: true,
     }
 ];
 
@@ -270,8 +274,8 @@ async function loadPlanning() {
 
         events.forEach(event => {
 
-            const card = document.createElement("div");
-            card.className = "event";
+const card = document.createElement("div");
+card.className = event.race ? "event race" : "event";
 
             const isMission = event.id !== undefined;
 
