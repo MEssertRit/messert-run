@@ -32,9 +32,9 @@ header img {
 }
 
 main {
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
-    padding: 30px 20px 50px;
+    padding: 25px 20px 50px;
 }
 
 .title {
@@ -50,17 +50,18 @@ main {
     color: #666;
 }
 
-.grid {
+.admin-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
+    margin-bottom: 25px;
 }
 
 .card {
     background: white;
     border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    padding: 22px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
 }
 
 .card h2 {
@@ -85,8 +86,96 @@ main {
     font-weight: bold;
 }
 
-.button.secondary {
-    background: #202020;
+.planning-card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.planning-card h2 {
+    margin-top: 0;
+}
+
+.planning {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.event {
+    background: #f5f1e8;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.event-top {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 15px;
+}
+
+.time {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.category {
+    font-size: 12px;
+    font-weight: bold;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.mission-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.details {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.volunteers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+}
+
+.volunteer {
+    background: white;
+    border-radius: 9px;
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+.volunteer strong {
+    display: block;
+}
+
+.volunteer a {
+    color: #555;
+    text-decoration: none;
+}
+
+.no-volunteers {
+    margin-top: 10px;
+    color: #888;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.loading,
+.empty,
+.error {
+    padding: 20px;
+    text-align: center;
+    color: #777;
 }
 
 .back {
@@ -98,14 +187,19 @@ main {
     font-weight: bold;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
 
     main {
-        padding: 25px 14px 40px;
+        padding: 20px 14px 40px;
     }
 
-    .grid {
+    .admin-grid {
         grid-template-columns: 1fr;
+    }
+
+    .event-top {
+        grid-template-columns: 60px 1fr;
+        gap: 10px;
     }
 
 }
@@ -126,67 +220,346 @@ main {
         <p>Espace réservé au comité — M’Essert Run 2026</p>
     </div>
 
-    <div class="grid">
+
+    <!-- ========================= -->
+    <!-- OUTILS ADMINISTRATION -->
+    <!-- ========================= -->
+
+    <div class="admin-grid">
 
         <div class="card">
-            <h2>📋 Missions</h2>
+
+            <h2>👥 Gestion des bénévoles</h2>
 
             <p>
-                Créer, modifier ou supprimer les missions
-                des bénévoles.
+                Ajouter, modifier ou supprimer les bénévoles
+                et leurs coordonnées.
             </p>
 
-            <a href="admin-missions.html" class="button">
-                GÉRER LES MISSIONS
-            </a>
-        </div>
-
-        <div class="card">
-            <h2>👥 Bénévoles</h2>
-
-            <p>
-                Ajouter les bénévoles et modifier
-                leurs coordonnées.
-            </p>
-
-            <a href="admin-benevoles.html" class="button">
+            <a
+                href="admin-benevoles.html"
+                class="button"
+            >
                 GÉRER LES BÉNÉVOLES
             </a>
+
         </div>
 
-        <div class="card">
-            <h2>🔗 Affectations</h2>
-
-            <p>
-                Affecter les bénévoles aux différentes
-                missions et gérer les affectations.
-            </p>
-
-            <a href="admin-missions.html#affectations" class="button">
-                GÉRER LES AFFECTATIONS
-            </a>
-        </div>
 
         <div class="card">
-            <h2>📅 Planning</h2>
+
+            <h2>📋 Missions & affectations</h2>
 
             <p>
-                Consulter le planning général avec
-                les missions et les bénévoles affectés.
+                Créer et modifier les missions, puis affecter
+                les bénévoles aux différents postes.
             </p>
 
-            <a href="planning.html" class="button secondary">
-                VOIR LE PLANNING
+            <a
+                href="admin-missions.html"
+                class="button"
+            >
+                GÉRER LES MISSIONS
             </a>
+
         </div>
 
     </div>
 
-    <a class="back" href="espace-benevoles.html">
+
+    <!-- ========================= -->
+    <!-- PLANNING EN DIRECT -->
+    <!-- ========================= -->
+
+    <div class="planning-card">
+
+        <h2>📅 Planning général</h2>
+
+        <p class="details">
+            Vue en direct des missions et des bénévoles affectés.
+        </p>
+
+        <div
+            id="planning"
+            class="planning"
+        >
+            Chargement du planning...
+        </div>
+
+    </div>
+
+
+    <a
+        class="back"
+        href="espace-benevoles.html"
+    >
         ← Retour à l’espace bénévoles
     </a>
 
 </main>
+
+
+<script>
+
+/* ========================= */
+/* COURSES FIXES */
+/* ========================= */
+
+const fixedEvents = [
+
+    {
+        start_time: "08:45",
+        category: "🚶 COURSE",
+        title: "Départ de la Marche",
+        details: "5,8 km — route ouverte, pas de signaleurs"
+    },
+
+    {
+        start_time: "09:00",
+        category: "🐢 COURSE",
+        title: "Course de la Tortue",
+        details: "900 m"
+    },
+
+    {
+        start_time: "09:15",
+        category: "🐇 COURSE",
+        title: "Course du Lièvre",
+        details: "2,4 km"
+    },
+
+    {
+        start_time: "09:45",
+        category: "🔴 COURSE",
+        title: "Course 10 km",
+        details: "10 km"
+    }
+
+];
+
+
+/* ========================= */
+/* CHARGEMENT DU PLANNING */
+/* ========================= */
+
+async function loadPlanning() {
+
+    const container =
+        document.getElementById("planning");
+
+    try {
+
+        const [
+            missionsResponse,
+            assignmentsResponse
+        ] = await Promise.all([
+
+            fetch("/api/missions"),
+
+            fetch("/api/assignments")
+
+        ]);
+
+
+        if (
+            !missionsResponse.ok ||
+            !assignmentsResponse.ok
+        ) {
+            throw new Error();
+        }
+
+
+        const missions =
+            await missionsResponse.json();
+
+        const assignments =
+            await assignmentsResponse.json();
+
+
+        const events = [
+            ...fixedEvents,
+            ...missions
+        ];
+
+
+        events.sort((a, b) =>
+            (a.start_time || "")
+                .localeCompare(b.start_time || "")
+        );
+
+
+        container.innerHTML = "";
+
+
+        events.forEach(event => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "event";
+
+
+            const isMission =
+                event.id !== undefined;
+
+
+            const missionAssignments =
+                isMission
+                    ? assignments.filter(
+                        assignment =>
+                            Number(
+                                assignment.mission_id
+                            ) === Number(event.id)
+                    )
+                    : [];
+
+
+            const endTime =
+                event.end_time
+                    ? ` → ${event.end_time}`
+                    : "";
+
+
+            let volunteersHTML = "";
+
+
+            if (
+                missionAssignments.length > 0
+            ) {
+
+                volunteersHTML = `
+
+                    <div class="volunteers">
+
+                        ${missionAssignments.map(person => `
+
+                            <div class="volunteer">
+
+                                <strong>
+                                    👤
+                                    ${person.first_name}
+                                    ${person.last_name}
+                                </strong>
+
+                                ${
+                                    person.phone
+                                        ? `
+                                        <a href="tel:${person.phone}">
+                                            📞 ${person.phone}
+                                        </a>
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        `).join("")}
+
+                    </div>
+
+                `;
+
+            } else if (isMission) {
+
+                volunteersHTML = `
+                    <div class="no-volunteers">
+                        Aucun bénévole affecté pour le moment.
+                    </div>
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="event-top">
+
+                    <div class="time">
+                        ${event.start_time || ""}
+                        ${endTime}
+                    </div>
+
+                    <div>
+
+                        <div class="category">
+                            ${event.category || ""}
+                        </div>
+
+                        <div class="mission-title">
+                            ${event.title}
+                        </div>
+
+                        ${
+                            event.details
+                                ? `
+                                <div class="details">
+                                    ${event.details}
+                                </div>
+                                `
+                                : ""
+                        }
+
+                        ${
+                            event.race
+                                ? `
+                                <div class="details">
+                                    🏃 ${event.race}
+                                </div>
+                                `
+                                : ""
+                        }
+
+                        ${
+                            event.location
+                                ? `
+                                <div class="details">
+                                    📍 ${event.location}
+                                </div>
+                                `
+                                : ""
+                        }
+
+                        ${
+                            event.instructions
+                                ? `
+                                <div class="details">
+                                    📝 ${event.instructions}
+                                </div>
+                                `
+                                : ""
+                        }
+
+                        ${volunteersHTML}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+    } catch {
+
+        container.innerHTML = `
+            <div class="error">
+                Impossible de charger le planning.
+            </div>
+        `;
+
+    }
+
+}
+
+
+loadPlanning();
+
+</script>
 
 </body>
 </html>
