@@ -275,7 +275,7 @@ async function loadPlanning() {
         events.forEach(event => {
 
 const card = document.createElement("div");
-card.className = event.race ? "event race" : "event";
+card.className = event.race === true ? "event race" : "event";
 
             const isMission = event.id !== undefined;
 
