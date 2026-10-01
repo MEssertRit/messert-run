@@ -561,5 +561,16 @@ loadPlanning();
 
 </script>
 
+<script>
+
+const role = sessionStorage.getItem("role");
+
+if (role !== "comite") {
+    alert("Accès réservé au comité.");
+    window.location.href = "espace-benevoles.html";
+}
+
+</script>
+    
 </body>
 </html>
