@@ -8,180 +8,663 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--forest:#2f4a36;--forest-dark:#203327;--forest-light:#5f765d;--bark:#6a4b34;--bark-dark:#4b3425;--cream:#f4efe3;--paper:#fbf9f4;--sage:#dfe5d8;--sand:#e7dcc7;--ink:#263027;--muted:#687067;--white:#fffdf9;--red:#b84b3f;--blue:#3f6f86;--green:#4f8a5b;--black:#202020;--shadow:0 16px 40px rgba(53,45,32,.1)}
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}a{text-decoration:none;color:inherit}button,input{font:inherit}.container{width:min(1120px,calc(100% - 40px));margin:auto}
-header{position:sticky;top:0;z-index:1000;background:rgba(251,249,244,.95);border-bottom:1px solid var(--sand);backdrop-filter:blur(12px)}.nav{max-width:1180px;margin:auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.home-link{font-weight:800;color:var(--forest)}nav{display:flex;align-items:center;gap:8px}nav a{padding:9px 12px;border-radius:9px;font-size:14px;font-weight:700}nav a:hover{background:var(--sage)}.nav-button,.cta{background:var(--forest);color:white!important;border-radius:9px!important}.menu-toggle{display:none;border:0;background:transparent;color:var(--forest);font-size:28px;cursor:pointer}
-.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--forest-dark),var(--forest));color:white;padding:76px 0 68px}.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.12)}.hero:before{width:420px;height:420px;right:-160px;top:-170px}.hero:after{width:260px;height:260px;left:-150px;bottom:-160px}.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:55px;align-items:center}.hero-copy small{display:inline-block;text-transform:uppercase;letter-spacing:2px;font-weight:800;color:#dfe5d8;margin-bottom:12px}.hero h1{font-family:Georgia,serif;font-size:clamp(42px,7vw,78px);line-height:.98;margin-bottom:18px}.hero p{font-size:18px;max-width:600px;color:#edf1e9}.hero-logo-wrap{justify-self:end;background:rgba(255,253,249,.96);padding:18px;border:1px solid rgba(255,255,255,.5);box-shadow:0 20px 50px rgba(0,0,0,.2);border-radius:24px;transform:rotate(-1deg)}.hero-logo{display:block;width:min(340px,42vw);height:auto;border-radius:12px}.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0}.pill{padding:8px 12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);font-size:14px}.cta{display:inline-block;padding:13px 18px;font-weight:800}.cta:hover{background:var(--bark)}
-.countdown{background:var(--cream);color:var(--ink);padding:30px 0}.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.count{background:var(--white);border:1px solid var(--sand);border-radius:14px;text-align:center;padding:18px;box-shadow:var(--shadow)}.count strong{display:block;font-family:Georgia,serif;font-size:34px;color:var(--forest)}.count span{text-transform:uppercase;font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:800}
-section{padding:72px 0}.section-title{text-align:center;margin-bottom:34px}.section-title span{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--bark);font-weight:800}.section-title h2{font-family:Georgia,serif;font-size:clamp(32px,5vw,48px);color:var(--forest-dark);margin-top:4px}.courses{background:var(--paper)}.course-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.course-card{background:var(--white);border:1px solid var(--sand);border-top:6px solid var(--card-color);border-radius:16px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:300px}.course-icon{font-size:36px;margin-bottom:12px}.course-card h3{font-family:Georgia,serif;font-size:25px;line-height:1.05;color:var(--forest-dark)}.course-age{color:var(--muted);font-weight:700;margin:8px 0 10px}.course-price{font-family:Georgia,serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1.1;margin:2px 0 4px}.course-includes{font-size:13px;color:var(--muted);line-height:1.45;margin-bottom:18px}.course-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}.stat{background:var(--cream);border-radius:10px;padding:10px}.stat strong{display:block;font-size:22px;color:var(--forest)}.stat span{text-transform:uppercase;font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:800}.course-note{font-size:13px;color:var(--muted);margin-top:14px}.strava-button{display:inline-block;margin-top:14px;padding:10px 12px;background:var(--forest);color:white;border-radius:8px;font-size:12px;font-weight:800;letter-spacing:.3px}.strava-button:hover{background:var(--bark)}
-.map-section{background:var(--cream)}.map-intro{text-align:center;max-width:700px;margin:-12px auto 24px;color:var(--muted)}.map-panel{background:var(--white);border:1px solid var(--sand);border-radius:18px;padding:16px;box-shadow:var(--shadow)}.map-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}.map-option{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--sand);border-radius:10px;background:var(--paper);font-weight:700;cursor:pointer}.map-option input{accent-color:var(--forest)}.route-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.route-dot.tortue{background:var(--green)}.route-dot.lievre{background:var(--black)}.route-dot.course10{background:var(--red)}.route-dot.marche{background:var(--blue)}#runMap{height:520px;border-radius:14px;overflow:hidden}.map-note{font-size:12px;color:var(--muted);padding:10px 2px 0}.leaflet-control-attribution{font-size:10px}
-#infos{background:var(--paper)}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.info-card{background:var(--white);border:1px solid var(--sand);border-radius:16px;padding:24px;box-shadow:var(--shadow)}.info-card h3{font-family:Georgia,serif;color:var(--forest-dark);font-size:24px;margin-bottom:10px}.info-card p{color:var(--muted)}
-.actions{background:var(--forest-dark);color:white;text-align:center}.actions h2{font-family:Georgia,serif;font-size:42px;margin-bottom:8px}.actions p{color:#dfe5d8;margin-bottom:24px}.cta-light{display:inline-block;background:var(--cream);color:var(--forest-dark);padding:14px 20px;border-radius:9px;font-weight:800}.cta-light:hover{background:white}.volunteer{background:var(--cream)}.volunteer-content{text-align:center;max-width:680px;margin:auto}.volunteer-content p{color:var(--muted);margin-bottom:20px}
-footer{background:var(--bark-dark);color:#f4efe3;text-align:center;padding:42px 20px}.association-logo{width:90px;height:90px;object-fit:cover;border-radius:16px;display:block;margin:0 auto 18px}.footer-small{font-size:12px;opacity:.72;margin-top:5px}
-@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-logo-wrap{justify-self:start}.hero-logo{width:min(300px,75vw)}.course-grid{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:1fr}}
-@media(max-width:700px){.container{width:min(100% - 28px,1120px)}.nav{padding:9px 14px}.home-link{display:none}.menu-toggle{display:block}nav{position:absolute;top:59px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--sand);box-shadow:0 12px 25px rgba(0,0,0,.08)}nav.open{display:flex}nav a{padding:15px 18px;border-bottom:1px solid var(--sand);border-radius:0}.nav-button{margin:10px 18px;text-align:center;border-bottom:0}.hero{padding:52px 0}.hero h1{font-size:48px}.hero-logo-wrap{padding:12px}.countdown-grid{grid-template-columns:repeat(2,1fr)}section{padding:54px 0}.course-grid{grid-template-columns:1fr}.course-card{min-height:0}.map-options{display:grid;grid-template-columns:1fr 1fr}#runMap{height:430px}.actions h2{font-size:34px}}
-@media(max-width:450px){.map-options{grid-template-columns:1fr}.hero-meta{flex-direction:column;align-items:flex-start}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+.container{width:min(1120px,calc(100% - 40px));margin:auto}
+header{position:sticky;top:0;z-index:1000;background:rgba(251,249,244,.95);border-bottom:1px solid var(--sand);backdrop-filter:blur(12px)}
+.nav{max-width:1180px;margin:auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.home-link{font-weight:800;color:var(--forest)}
+nav{display:flex;align-items:center;gap:8px}
+nav a{padding:9px 12px;border-radius:9px;font-size:14px;font-weight:700}
+nav a:hover{background:var(--sage)}
+.nav-button,.cta{background:var(--forest);color:white!important;border-radius:9px!important}
+.menu-toggle{display:none;border:0;background:transparent;color:var(--forest);font-size:28px;cursor:pointer}
+
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--forest-dark),var(--forest));color:white;padding:76px 0 68px}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.12)}
+.hero:before{width:420px;height:420px;right:-160px;top:-170px}
+.hero:after{width:260px;height:260px;left:-150px;bottom:-160px}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:55px;align-items:center}
+.hero-copy small{display:inline-block;text-transform:uppercase;letter-spacing:2px;font-weight:800;color:#dfe5d8;margin-bottom:12px}
+.hero h1{font-family:Georgia,serif;font-size:clamp(42px,7vw,78px);line-height:.98;margin-bottom:18px}
+.hero p{font-size:18px;max-width:600px;color:#edf1e9}
+.hero-logo-wrap{justify-self:end;background:rgba(255,253,249,.96);padding:18px;border:1px solid rgba(255,255,255,.5);box-shadow:0 20px 50px rgba(0,0,0,.2);border-radius:24px;transform:rotate(-1deg)}
+.hero-logo{display:block;width:min(340px,42vw);height:auto;border-radius:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0}
+.pill{padding:8px 12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);font-size:14px}
+.cta{display:inline-block;padding:13px 18px;font-weight:800}
+.cta:hover{background:var(--bark)}
+
+.countdown{background:var(--cream);color:var(--ink);padding:30px 0}
+.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.count{background:var(--white);border:1px solid var(--sand);border-radius:14px;text-align:center;padding:18px;box-shadow:var(--shadow)}
+.count strong{display:block;font-family:Georgia,serif;font-size:34px;color:var(--forest)}
+.count span{text-transform:uppercase;font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:800}
+
+section{padding:72px 0}
+.section-title{text-align:center;margin-bottom:34px}
+.section-title span{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--bark);font-weight:800}
+.section-title h2{font-family:Georgia,serif;font-size:clamp(32px,5vw,48px);color:var(--forest-dark);margin-top:4px}
+.courses{background:var(--paper)}
+.course-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.course-card{background:var(--white);border:1px solid var(--sand);border-top:6px solid var(--card-color);border-radius:16px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:300px}
+.course-icon{font-size:36px;margin-bottom:12px}
+.course-card h3{font-family:Georgia,serif;font-size:25px;line-height:1.05;color:var(--forest-dark)}
+.course-age{color:var(--muted);font-weight:700;margin:8px 0 10px}
+.course-price{font-family:Georgia,serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1.1;margin:2px 0 4px}
+.course-includes{font-size:13px;color:var(--muted);line-height:1.45;margin-bottom:18px}
+.course-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+.stat{background:var(--cream);border-radius:10px;padding:10px}
+.stat strong{display:block;font-size:22px;color:var(--forest)}
+.stat span{text-transform:uppercase;font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:800}
+.course-note{font-size:13px;color:var(--muted);margin-top:14px}
+.strava-button{display:inline-block;margin-top:14px;padding:10px 12px;background:var(--forest);color:white;border-radius:8px;font-size:12px;font-weight:800;letter-spacing:.3px}
+.strava-button:hover{background:var(--bark)}
+
+.map-section{background:var(--cream)}
+.map-intro{text-align:center;max-width:700px;margin:-12px auto 24px;color:var(--muted)}
+.map-panel{background:var(--white);border:1px solid var(--sand);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.map-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.map-option{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--sand);border-radius:10px;background:var(--paper);font-weight:700;cursor:pointer}
+.map-option input{accent-color:var(--forest)}
+.route-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.route-dot.tortue{background:var(--green)}
+.route-dot.lievre{background:var(--black)}
+.route-dot.course10{background:var(--red)}
+.route-dot.marche{background:var(--blue)}
+#runMap{height:520px;border-radius:14px;overflow:hidden}
+.map-note{font-size:12px;color:var(--muted);padding:10px 2px 0}
+.leaflet-control-attribution{font-size:10px}
+
+#infos{background:var(--paper)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.info-card{background:var(--white);border:1px solid var(--sand);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.info-card h3{font-family:Georgia,serif;color:var(--forest-dark);font-size:24px;margin-bottom:10px}
+.info-card p{color:var(--muted)}
+
+.actions{background:var(--forest-dark);color:white;text-align:center}
+.actions h2{font-family:Georgia,serif;font-size:42px;margin-bottom:8px}
+.actions p{color:#dfe5d8;margin-bottom:24px}
+.cta-light{display:inline-block;background:var(--cream);color:var(--forest-dark);padding:14px 20px;border-radius:9px;font-weight:800}
+.cta-light:hover{background:white}
+.volunteer{background:var(--cream)}
+.volunteer-content{text-align:center;max-width:680px;margin:auto}
+.volunteer-content p{color:var(--muted);margin-bottom:20px}
+
+footer{background:var(--bark-dark);color:#f4efe3;text-align:center;padding:42px 20px}
+.association-logo{width:90px;height:90px;object-fit:cover;border-radius:16px;display:block;margin:0 auto 18px}
+.footer-small{font-size:12px;opacity:.72;margin-top:5px}
+
+@media(max-width:900px){
+.hero-inner{grid-template-columns:1fr}
+.hero-logo-wrap{justify-self:start}
+.hero-logo{width:min(300px,75vw)}
+.course-grid{grid-template-columns:repeat(2,1fr)}
+.info-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:700px){
+.container{width:min(100% - 28px,1120px)}
+.nav{padding:9px 14px}
+.home-link{display:none}
+.menu-toggle{display:block}
+nav{position:absolute;top:59px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--sand);box-shadow:0 12px 25px rgba(0,0,0,.08)}
+nav.open{display:flex}
+nav a{padding:15px 18px;border-bottom:1px solid var(--sand);border-radius:0}
+.nav-button{margin:10px 18px;text-align:center;border-bottom:0}
+.hero{padding:52px 0}
+.hero h1{font-size:48px}
+.hero-logo-wrap{padding:12px}
+.countdown-grid{grid-template-columns:repeat(2,1fr)}
+section{padding:54px 0}
+.course-grid{grid-template-columns:1fr}
+.course-card{min-height:0}
+.map-options{display:grid;grid-template-columns:1fr 1fr}
+#runMap{height:430px}
+.actions h2{font-size:34px}
+}
+
+@media(max-width:450px){
+.map-options{grid-template-columns:1fr}
+.hero-meta{flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
+
 <body>
-<header><div class="nav"><a href="#accueil" class="home-link">Accueil</a><button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button><nav id="mainNav"><a href="#accueil">🏠 Accueil</a><a href="#epreuves">🏃 Épreuves</a><a href="#parcours">🗺️ Parcours</a><a href="#infos">ℹ️ Infos</a><a href="#benevoles">🙋 Bénévoles</a><a href="#inscription" class="nav-button">🎟️ S'inscrire</a></nav></div></header>
+
+<header>
+<div class="nav">
+<a href="#accueil" class="home-link">Accueil</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+
+<nav id="mainNav">
+<a href="#accueil">🏠 Accueil</a>
+<a href="#epreuves">🏃 Épreuves</a>
+<a href="#parcours">🗺️ Parcours</a>
+<a href="#infos">ℹ️ Infos</a>
+<a href="#benevoles">🙋 Bénévoles</a>
+<a href="https://www.billetweb.fr/messert-run1" class="nav-button" target="_blank" rel="noopener">🎟️ S'inscrire</a>
+</nav>
+</div>
+</header>
+
 <main>
-<section class="hero" id="accueil"><div class="container hero-inner"><div class="hero-copy"><small>Course & marche à Essert</small><h1>M'Essert Run</h1><p>Rendez-vous le <strong>8 novembre 2026</strong> à Essert — Messery.</p><div class="hero-meta"><span class="pill">🥾 Marche · 8h45</span><span class="pill">🏃 Courses · 9h15</span></div><a href="https://www.billetweb.fr/messert-run1" class="cta" target="_blank" rel="noopener">ACCÉDER À LA BILLETTERIE</a></div><div class="hero-logo-wrap"><img src="logo-messert-run.svg" alt="Logo M'Essert Run" class="hero-logo"></div></div></section>
-<section class="countdown"><div class="container"><div class="section-title"><span>Le rendez-vous approche</span><h2>Compte à rebours</h2></div><div class="countdown-grid"><div class="count"><strong id="days">—</strong><span>Jours</span></div><div class="count"><strong id="hours">—</strong><span>Heures</span></div><div class="count"><strong id="minutes">—</strong><span>Minutes</span></div><div class="count"><strong id="seconds">—</strong><span>Secondes</span></div></div></div></section>
+
+<section class="hero" id="accueil">
+<div class="container hero-inner">
+
+<div class="hero-copy">
+<small>Course & marche à Essert</small>
+<h1>M'Essert Run</h1>
+<p>Rendez-vous le <strong>8 novembre 2026</strong> à Essert — Messery.</p>
+
+<div class="hero-meta">
+<span class="pill">🥾 Marche · 9h00</span>
+<span class="pill">🏃 Courses · 9h30–11h00</span>
+</div>
+
+<a href="https://www.billetweb.fr/messert-run1" class="cta" target="_blank" rel="noopener">
+ACCÉDER À LA BILLETTERIE
+</a>
+</div>
+
+<div class="hero-logo-wrap">
+<img src="logo-messert-run.svg" alt="Logo M'Essert Run" class="hero-logo">
+</div>
+
+</div>
+</section>
+
+<section class="countdown">
+<div class="container">
+<div class="section-title">
+<span>Le rendez-vous approche</span>
+<h2>Compte à rebours</h2>
+</div>
+
+<div class="countdown-grid">
+<div class="count"><strong id="days">—</strong><span>Jours</span></div>
+<div class="count"><strong id="hours">—</strong><span>Heures</span></div>
+<div class="count"><strong id="minutes">—</strong><span>Minutes</span></div>
+<div class="count"><strong id="seconds">—</strong><span>Secondes</span></div>
+</div>
+</div>
+</section>
+
 <section class="courses" id="epreuves">
 <div class="container">
 
 <div class="section-title">
-    <span>À chacun son défi</span>
-    <h2>Les épreuves</h2>
+<span>À chacun son défi</span>
+<h2>Les épreuves</h2>
 </div>
 
 <div class="course-grid">
 
+<!-- 10 KM -->
 <article class="course-card" style="--card-color:var(--red)">
-    <div class="course-icon">🏃</div>
-    <h3>La Course</h3>
-    <div class="course-age">À partir de 16 ans</div>
-    <div class="course-price">20 €</div>
-    <div class="course-includes">
-        Dossard · Repas · Boisson chaude · Tombola
-    </div>
+<div class="course-icon">🏃</div>
+<h3>La Course</h3>
+<div class="course-age">À partir de 16 ans</div>
+<div class="course-price">20 €</div>
 
-    <a
-        href="https://www.strava.com/routes/3539167698193867726"
-        target="_blank"
-        rel="noopener"
-        class="strava-button">
-        VOIR SUR STRAVA ↗
-    </a>
+<div class="course-includes">
+Dossard · Repas · Boisson chaude · Tombola
+</div>
 
-    <div class="course-stats">
-        <div class="stat">
-            <strong id="distance-10km">—</strong>
-            <span>distance</span>
-        </div>
-        <div class="stat">
-            <strong id="elevation-10km">—</strong>
-            <span>d+</span>
-        </div>
-    </div>
+<a href="https://www.strava.com/routes/3539167698193867726"
+target="_blank"
+rel="noopener"
+class="strava-button">
+VOIR SUR STRAVA ↗
+</a>
 
-    <div class="course-note">
-        Parcours chronométré · départ 9h45
-    </div>
+<div class="course-stats">
+<div class="stat">
+<strong id="distance-10km">—</strong>
+<span>distance</span>
+</div>
+<div class="stat">
+<strong id="elevation-10km">—</strong>
+<span>d+</span>
+</div>
+</div>
+
+<div class="course-note">
+🏁 Départ à 9h30 · Parcours chronométré
+</div>
 </article>
 
-
+<!-- LIÈVRE -->
 <article class="course-card" style="--card-color:var(--black)">
-    <div class="course-icon">🐇</div>
-    <h3>La Course<br>du Lièvre</h3>
-    <div class="course-age">7 à 16 ans</div>
-    <div class="course-price">10 €</div>
-    <div class="course-includes">
-        Dossard · Repas
-    </div>
+<div class="course-icon">🐇</div>
+<h3>La Course<br>du Lièvre</h3>
+<div class="course-age">7 à 16 ans</div>
+<div class="course-price">10 €</div>
 
-    <div class="course-stats">
-        <div class="stat">
-            <strong id="distance-lievre">—</strong>
-            <span>distance</span>
-        </div>
-        <div class="stat">
-            <strong id="elevation-lievre">—</strong>
-            <span>d+</span>
-        </div>
-    </div>
+<div class="course-includes">
+Dossard · Repas
+</div>
 
-    <div class="course-note">
-        Un défi pour les jeunes coureurs
-    </div>
+<div class="course-stats">
+<div class="stat">
+<strong id="distance-lievre">—</strong>
+<span>distance</span>
+</div>
+<div class="stat">
+<strong id="elevation-lievre">—</strong>
+<span>d+</span>
+</div>
+</div>
+
+<div class="course-note">
+🏁 Départ à 11h00 · Un défi pour les jeunes coureurs
+</div>
 </article>
 
-
+<!-- TORTUE -->
 <article class="course-card" style="--card-color:var(--green)">
-    <div class="course-icon">🐢</div>
-    <h3>La Course<br>de la Tortue</h3>
-    <div class="course-age">3 à 6 ans</div>
-    <div class="course-price">10 €</div>
-    <div class="course-includes">
-        Dossard · Repas
-    </div>
+<div class="course-icon">🐢</div>
+<h3>La Course<br>de la Tortue</h3>
+<div class="course-age">3 à 6 ans</div>
+<div class="course-price">10 €</div>
 
-    <div class="course-stats">
-        <div class="stat">
-            <strong id="distance-tortue">—</strong>
-            <span>distance</span>
-        </div>
-        <div class="stat">
-            <strong id="elevation-tortue">—</strong>
-            <span>d+</span>
-        </div>
-    </div>
+<div class="course-includes">
+Dossard · Repas
+</div>
 
-    <div class="course-note">
-        Le premier défi des petits champions
-    </div>
+<div class="course-stats">
+<div class="stat">
+<strong id="distance-tortue">—</strong>
+<span>distance</span>
+</div>
+<div class="stat">
+<strong id="elevation-tortue">—</strong>
+<span>d+</span>
+</div>
+</div>
+
+<div class="course-note">
+🏁 Départ à 10h45 · Le premier défi des petits champions
+</div>
 </article>
 
-
+<!-- MARCHE -->
 <article class="course-card" style="--card-color:var(--blue)">
-    <div class="course-icon">🥾</div>
-    <h3>La Marche</h3>
-    <div class="course-age">Accessible à tous</div>
-    <div class="course-price">15 €</div>
-    <div class="course-includes">
-        Dossard · Repas · Boisson chaude · Tombola
-    </div>
+<div class="course-icon">🥾</div>
+<h3>La Marche</h3>
+<div class="course-age">Accessible à tous</div>
+<div class="course-price">15 €</div>
 
-    <div class="course-stats">
-        <div class="stat">
-            <strong id="distance-marche">—</strong>
-            <span>distance</span>
-        </div>
-        <div class="stat">
-            <strong id="elevation-marche">—</strong>
-            <span>d+</span>
-        </div>
-    </div>
+<div class="course-includes">
+Dossard · Repas · Boisson chaude · Tombola
+</div>
 
-    <div class="course-note">
-        Parcours convivial · départ 8h45
-    </div>
+<div class="course-stats">
+<div class="stat">
+<strong id="distance-marche">—</strong>
+<span>distance</span>
+</div>
+<div class="stat">
+<strong id="elevation-marche">—</strong>
+<span>d+</span>
+</div>
+</div>
+
+<div class="course-note">
+🏁 Départ à 9h00 · Parcours convivial
+</div>
 </article>
 
 </div>
 </div>
 </section>
-<section class="map-section" id="parcours"><div class="container"><div class="section-title"><span>Préparez votre parcours</span><h2>Les parcours</h2></div><p class="map-intro">Affichez un ou plusieurs parcours. Les distances et dénivelés sont calculés automatiquement depuis les fichiers GPX du site.</p><div class="map-panel"><div class="map-options">
+
+<section class="map-section" id="parcours">
+<div class="container">
+
+<div class="section-title">
+<span>Préparez votre parcours</span>
+<h2>Les parcours</h2>
+</div>
+
+<p class="map-intro">
+Affichez un ou plusieurs parcours. Les distances et dénivelés sont calculés automatiquement depuis les fichiers GPX du site.
+</p>
+
+<div class="map-panel">
+
+<div class="map-options">
 <label class="map-option"><input type="checkbox" id="route-tortue" checked><span class="route-dot tortue"></span>🐢 Tortue</label>
 <label class="map-option"><input type="checkbox" id="route-lievre" checked><span class="route-dot lievre"></span>🐇 Lièvre</label>
 <label class="map-option"><input type="checkbox" id="route-10km" checked><span class="route-dot course10"></span>🏃 10 km</label>
 <label class="map-option"><input type="checkbox" id="route-marche" checked><span class="route-dot marche"></span>🥾 Marche</label>
-</div><div id="runMap"></div><div class="map-note">Plusieurs parcours peuvent être affichés simultanément.</div></div></div></section>
-<section id="infos"><div class="container"><div class="section-title"><span>Tout savoir</span><h2>Informations pratiques</h2></div><div class="info-grid"><div class="info-card"><h3>📍 Où ?</h3><p>Rendez-vous à Essert, sur la commune de Messery.</p></div><div class="info-card"><h3>📅 Quand ?</h3><p>Dimanche 8 novembre 2026. Marche à 8h45 et courses à 9h15.</p></div><div class="info-card"><h3>🎉 Après l'effort</h3><p>Un moment convivial attend les participants après les épreuves.</p></div></div></div></section>
-<section class="actions" id="inscription"><div class="container"><h2>Prêt à relever le défi ?</h2><p>Les inscriptions seront ouvertes prochainement.</p><a href="#" class="cta-light">ACCÉDER À LA BILLETTERIE</a></div></section>
-<section class="volunteer" id="benevoles"><div class="container"><div class="section-title"><span>Sans eux, rien ne serait possible</span><h2>Devenez bénévole</h2></div><div class="volunteer-content">     <p>Vous souhaitez donner un coup de main à l'organisation de la M'Essert Run ?</p>      <img src="qr-benevoles.png"          alt="QR code pour rejoindre le groupe WhatsApp des bénévoles"          style="width:220px;max-width:80%;margin:10px auto 20px;display:block;border-radius:14px;">      <a href="https://chat.whatsapp.com/IqasK6iucUPBlTOajRRPpo?mode=gi_t"        class="cta"        target="_blank"        rel="noopener">         REJOINDRE LE GROUPE WHATSAPP     </a>      <br><br>      <a href="mailto:messert-rit@protonmail.com" class="cta">         NOUS CONTACTER PAR E-MAIL     </a> 
+</div>
 
+<div id="runMap"></div>
 
-  
+<div class="map-note">
+Plusieurs parcours peuvent être affichés simultanément.
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="infos">
+<div class="container">
+
+<div class="section-title">
+<span>Tout savoir</span>
+<h2>Informations pratiques</h2>
+</div>
+
+<div class="info-grid">
+
+<div class="info-card">
+<h3>📍 Où ?</h3>
+<p>Rendez-vous à Essert, sur la commune de Messery.</p>
+</div>
+
+<div class="info-card">
+<h3>📅 Quand ?</h3>
+<p>
+Dimanche 8 novembre 2026.<br>
+🥾 Marche : 9h00<br>
+🏃 10 km : 9h30<br>
+🐢 Tortue : 10h45<br>
+🐇 Lièvre : 11h00
+</p>
+</div>
+
+<div class="info-card">
+<h3>🎉 Après l'effort</h3>
+<p>
+Un moment convivial attend les participants après les épreuves.
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="actions" id="inscription">
+<div class="container">
+<h2>Prêt à relever le défi ?</h2>
+<p>Les inscriptions sont ouvertes.</p>
+
+<a href="https://www.billetweb.fr/messert-run1"
+class="cta-light"
+target="_blank"
+rel="noopener">
+ACCÉDER À LA BILLETTERIE
+</a>
+
+</div>
+</section>
+
+<section class="volunteer" id="benevoles">
+<div class="container">
+
+<div class="section-title">
+<span>Sans eux, rien ne serait possible</span>
+<h2>Devenez bénévole</h2>
+</div>
+
+<div class="volunteer-content">
+
+<p>
+Vous souhaitez donner un coup de main à l'organisation de la M'Essert Run ?
+</p>
+
+<img src="qr-benevoles.png"
+alt="QR code pour rejoindre le groupe WhatsApp des bénévoles"
+style="width:220px;max-width:80%;margin:10px auto 20px;display:block;border-radius:14px;">
+
+<a href="https://chat.whatsapp.com/IqasK6iucUPBlTOajRRPpo?mode=gi_t"
+class="cta"
+target="_blank"
+rel="noopener">
+REJOINDRE LE GROUPE WHATSAPP
+</a>
+
+<br><br>
+
+<a href="mailto:messert-rit@protonmail.com" class="cta">
+NOUS CONTACTER PAR E-MAIL
+</a>
+
 <br><br>
 
 <a href="benevoles.html" class="cta">
-    👥 ESPACE BÉNÉVOLES
+👥 ESPACE BÉNÉVOLES
 </a>
 
-</div></div></section>
-  
+</div>
+</div>
+</section>
+
 </main>
-<footer><img src="logo-messert-rit.jpg" alt="Logo M'Essert Rit" class="association-logo"><p>M'Essert Run 2026 · Essert · Messery</p><p class="footer-small">Organisé par l'association M'Essert Rit</p></footer>
+
+<footer>
+<img src="logo-messert-rit.jpg" alt="Logo M'Essert Rit" class="association-logo">
+<p>M'Essert Run 2026 · Essert · Messery</p>
+<p class="footer-small">Organisé par l'association M'Essert Rit</p>
+</footer>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-const menuToggle=document.getElementById('menuToggle'),mainNav=document.getElementById('mainNav');menuToggle.addEventListener('click',()=>mainNav.classList.toggle('open'));document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>mainNav.classList.remove('open')));
-const target=new Date('2026-11-08T08:45:00+01:00');function countdown(){const d=Math.max(0,target-new Date()),s=Math.floor(d/1000);document.getElementById('days').textContent=Math.floor(s/86400);document.getElementById('hours').textContent=Math.floor(s%86400/3600);document.getElementById('minutes').textContent=Math.floor(s%3600/60);document.getElementById('seconds').textContent=s%60}countdown();setInterval(countdown,1000);
-const routes={tortue:{file:'course-tortue.gpx',checkbox:'route-tortue',distance:'distance-tortue',displayDistance:'900 m',elevation:'elevation-tortue',color:'#4f8a5b'},lievre:{file:'course-lievre.gpx',checkbox:'route-lievre',distance:'distance-lievre',displayDistance:'2,4 km',elevation:'elevation-lievre',color:'#202020'},course10:{file:'course-10km.gpx',checkbox:'route-10km',distance:'distance-10km',displayDistance:'10 km',elevation:'elevation-10km',color:'#b84b3f'},marche:{file:'marche.gpx',checkbox:'route-marche',distance:'distance-marche',displayDistance:'5,8 km',elevation:'elevation-marche',color:'#3f6f86'}};
-const map=L.map('runMap').setView([46.35,6.31],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);const layers={};
-function hav(a,b,c,d){const R=6371000,p=Math.PI/180,x=(c-a)*p,y=(d-b)*p,z=Math.sin(x/2)**2+Math.cos(a*p)*Math.cos(c*p)*Math.sin(y/2)**2;return 2*R*Math.atan2(Math.sqrt(z),Math.sqrt(1-z))}function fmtDist(m){return m<1000?Math.round(m)+' m':(m/1000).toFixed(2).replace('.',',')+' km'}function fmtEle(m){return Math.round(m)+' m'}
-async function loadGPX(key){const r=routes[key];try{const xml=new DOMParser().parseFromString(await (await fetch(r.file)).text(),'application/xml'),pts=[...xml.querySelectorAll('trkpt')];if(!pts.length)throw Error('GPX vide');let dist=0,gain=0;for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i];dist+=hav(+a.getAttribute('lat'),+a.getAttribute('lon'),+b.getAttribute('lat'),+b.getAttribute('lon'));const e1=a.querySelector('ele'),e2=b.querySelector('ele');if(e1&&e2){const g=+e2.textContent-+e1.textContent;if(g>0)gain+=g}}document.getElementById(r.distance).textContent=r.displayDistance;document.getElementById(r.elevation).textContent=fmtEle(gain);const line=L.polyline(pts.map(p=>[+p.getAttribute('lat'),+p.getAttribute('lon')]),{color:r.color,weight:5,opacity:.88,lineCap:'round',lineJoin:'round'});layers[key]=line}catch(e){console.error(key,e);document.getElementById(r.distance).textContent='—';document.getElementById(r.elevation).textContent='—'}}
-function updateMap(){const bounds=[];for(const k in routes){const r=routes[k],line=layers[k],on=document.getElementById(r.checkbox).checked;if(!line)continue;if(on){line.addTo(map);bounds.push(line.getBounds())}else map.removeLayer(line)}if(bounds.length){let b=bounds[0];for(let i=1;i<bounds.length;i++)b=b.extend(bounds[i]);map.fitBounds(b,{padding:[25,25],maxZoom:15})}}for(const k in routes)document.getElementById(routes[k].checkbox).addEventListener('change',updateMap);Promise.all(Object.keys(routes).map(loadGPX)).then(updateMap);
+const menuToggle=document.getElementById('menuToggle'),
+mainNav=document.getElementById('mainNav');
+
+menuToggle.addEventListener('click',()=>mainNav.classList.toggle('open'));
+
+document.querySelectorAll('#mainNav a').forEach(a=>
+a.addEventListener('click',()=>mainNav.classList.remove('open'))
+);
+
+/* COMPTE À REBOURS : 8 NOVEMBRE 2026 À 09H00 */
+const target=new Date('2026-11-08T09:00:00+01:00');
+
+function countdown(){
+const d=Math.max(0,target-new Date()),
+s=Math.floor(d/1000);
+
+document.getElementById('days').textContent=Math.floor(s/86400);
+document.getElementById('hours').textContent=Math.floor(s%86400/3600);
+document.getElementById('minutes').textContent=Math.floor(s%3600/60);
+document.getElementById('seconds').textContent=s%60;
+}
+
+countdown();
+setInterval(countdown,1000);
+
+const routes={
+tortue:{
+file:'course-tortue.gpx',
+checkbox:'route-tortue',
+distance:'distance-tortue',
+displayDistance:'900 m',
+elevation:'elevation-tortue',
+color:'#4f8a5b'
+},
+lievre:{
+file:'course-lievre.gpx',
+checkbox:'route-lievre',
+distance:'distance-lievre',
+displayDistance:'2,4 km',
+elevation:'elevation-lievre',
+color:'#202020'
+},
+course10:{
+file:'course-10km.gpx',
+checkbox:'route-10km',
+distance:'distance-10km',
+displayDistance:'10 km',
+elevation:'elevation-10km',
+color:'#b84b3f'
+},
+marche:{
+file:'marche.gpx',
+checkbox:'route-marche',
+distance:'distance-marche',
+displayDistance:'5,8 km',
+elevation:'elevation-marche',
+color:'#3f6f86'
+}
+};
+
+const map=L.map('runMap').setView([46.35,6.31],13);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+maxZoom:19,
+attribution:'&copy; OpenStreetMap contributors'
+}
+).addTo(map);
+
+const layers={};
+
+function hav(a,b,c,d){
+const R=6371000,
+p=Math.PI/180,
+x=(c-a)*p,
+y=(d-b)*p,
+z=Math.sin(x/2)**2+
+Math.cos(a*p)*Math.cos(c*p)*Math.sin(y/2)**2;
+
+return 2*R*Math.atan2(Math.sqrt(z),Math.sqrt(1-z))
+}
+
+function fmtDist(m){
+return m<1000
+?Math.round(m)+' m'
+:(m/1000).toFixed(2).replace('.',',')+' km'
+}
+
+function fmtEle(m){
+return Math.round(m)+' m'
+}
+
+async function loadGPX(key){
+const r=routes[key];
+
+try{
+
+const xml=new DOMParser().parseFromString(
+await (await fetch(r.file)).text(),
+'application/xml'
+);
+
+const pts=[...xml.querySelectorAll('trkpt')];
+
+if(!pts.length)throw Error('GPX vide');
+
+let dist=0,
+gain=0;
+
+for(let i=1;i<pts.length;i++){
+
+const a=pts[i-1],
+b=pts[i];
+
+dist+=hav(
++a.getAttribute('lat'),
++a.getAttribute('lon'),
++b.getAttribute('lat'),
++b.getAttribute('lon')
+);
+
+const e1=a.querySelector('ele'),
+e2=b.querySelector('ele');
+
+if(e1&&e2){
+
+const g=+e2.textContent-+e1.textContent;
+
+if(g>0)gain+=g;
+}
+
+}
+
+document.getElementById(r.distance).textContent=r.displayDistance;
+document.getElementById(r.elevation).textContent=fmtEle(gain);
+
+const line=L.polyline(
+pts.map(p=>[
++p.getAttribute('lat'),
++p.getAttribute('lon')
+]),
+{
+color:r.color,
+weight:5,
+opacity:.88,
+lineCap:'round',
+lineJoin:'round'
+}
+);
+
+layers[key]=line;
+
+}catch(e){
+
+console.error(key,e);
+
+document.getElementById(r.distance).textContent='—';
+document.getElementById(r.elevation).textContent='—';
+
+}
+}
+
+function updateMap(){
+
+const bounds=[];
+
+for(const k in routes){
+
+const r=routes[k],
+line=layers[k],
+on=document.getElementById(r.checkbox).checked;
+
+if(!line)continue;
+
+if(on){
+line.addTo(map);
+bounds.push(line.getBounds());
+}else{
+map.removeLayer(line);
+}
+
+}
+
+if(bounds.length){
+
+let b=bounds[0];
+
+for(let i=1;i<bounds.length;i++)
+b=b.extend(bounds[i]);
+
+map.fitBounds(b,{
+padding:[25,25],
+maxZoom:15
+});
+
+}
+}
+
+for(const k in routes)
+document.getElementById(routes[k].checkbox)
+.addEventListener('change',updateMap);
+
+Promise.all(Object.keys(routes).map(loadGPX))
+.then(updateMap);
 </script>
+
 </body>
 </html>
