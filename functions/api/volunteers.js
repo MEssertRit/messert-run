@@ -22,9 +22,9 @@ export async function onRequest(context) {
             const phone = (data.phone || "").trim();
             const notes = (data.notes || "").trim();
 
-            if (!firstName || !lastName) {
+            if (!firstName ) {
                 return new Response(
-                    JSON.stringify({ error: "Prénom et nom obligatoires." }),
+                    JSON.stringify({ error: "Prénom obligatoire." }),
                     {
                         status: 400,
                         headers: {
@@ -77,7 +77,7 @@ export async function onRequest(context) {
             const phone = (data.phone || "").trim();
             const notes = (data.notes || "").trim();
 
-            if (!id || !firstName || !lastName) {
+            if (!id || !firstName) {
                 return new Response(
                     JSON.stringify({ error: "Données obligatoires manquantes." }),
                     {
