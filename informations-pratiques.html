@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#244b38">
+  <title>Informations pratiques — M’Essert Run 2026</title>
+  <meta name="description" content="Informations pratiques, circulation et stationnement pour M’Essert Run 2026 à Essert, Messery.">
+
+  <style>
+    :root {
+      --green: #244b38;
+      --green-light: #edf4ee;
+      --orange: #e6a15c;
+      --text: #26332b;
+      --muted: #657168;
+      --border: #e1e7e1;
+      --background: #f6f8f5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--background);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header .event-name {
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    header h1 {
+      margin: 8px 0;
+      font-size: clamp(27px, 5vw, 38px);
+      line-height: 1.2;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #e3eee5;
+    }
+
+    main {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 24px 16px 45px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .intro {
+      margin-bottom: 25px;
+    }
+
+    .intro h2 {
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
+
+    .intro p {
+      margin-top: 0;
+      color: var(--muted);
+    }
+
+    .section-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 12px rgba(30, 50, 35, 0.04);
+    }
+
+    .section-card h2 {
+      margin: 0 0 8px;
+      font-size: 23px;
+      line-height: 1.3;
+    }
+
+    .section-description {
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+
+    .legend {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px;
+      border-radius: 10px;
+      background: #f8f9f7;
+    }
+
+    .color-line {
+      flex: 0 0 9px;
+      min-height: 48px;
+      border-radius: 8px;
+    }
+
+    .red {
+      background: #ef4d55;
+    }
+
+    .orange {
+      background: #f5a623;
+    }
+
+    .green {
+      background: #43a568;
+    }
+
+    .legend-item strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .legend-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .image-placeholder {
+      min-height: 150px;
+      border: 2px dashed #cbd5cb;
+      border-radius: 12px;
+      background: #f8faf7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 22px;
+      color: var(--muted);
+    }
+
+    .image-placeholder .placeholder-icon {
+      font-size: 32px;
+      margin-bottom: 5px;
+    }
+
+    .image-placeholder strong {
+      color: var(--text);
+    }
+
+    .image-placeholder p {
+      font-size: 13px;
+      margin: 5px 0 0;
+    }
+
+    .map-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .notice {
+      padding: 15px 17px;
+      margin-top: 18px;
+      background: #fff6e9;
+      border-left: 4px solid var(--orange);
+      border-radius: 8px;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .notice p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .parking-list {
+      padding-left: 22px;
+    }
+
+    .parking-list li {
+      margin-bottom: 8px;
+    }
+
+    .bottom-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 5px 10px 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #eaf0e9;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--green);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 25px 16px;
+      }
+
+      main {
+        padding: 18px 12px 30px;
+      }
+
+      .section-card {
+        padding: 17px 14px;
+        border-radius: 13px;
+      }
+
+      .section-card h2 {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="event-name">M’Essert Run 2026</div>
+    <h1>Informations pratiques</h1>
+    <p>Dimanche 8 novembre 2026 · Essert, Messery</p>
+  </header>
+
+  <main>
+
+    <a class="back-link" href="espace-benevoles.html">
+      ← Retour à l’espace bénévoles
+    </a>
+
+    <div class="intro">
+      <h2>Préparer votre venue</h2>
+      <p>
+        Retrouvez ici les informations concernant la circulation,
+        les fermetures de routes et le stationnement pendant
+        M’Essert Run.
+      </p>
+    </div>
+
+    <!-- CIRCULATION ET FERMETURES -->
+
+    <section class="section-card">
+      <h2>🚧 Circulation et routes fermées</h2>
+      <p class="section-description">
+        Des restrictions temporaires de circulation sont prévues
+        pour assurer le bon déroulement des courses.
+      </p>
+
+      <div class="legend">
+
+        <div class="legend-item">
+          <div class="color-line red"></div>
+          <div>
+            <strong>Rouge — Fermeture provisoire pendant les courses</strong>
+            <p>
+              Routes fermées temporairement durant le passage
+              des coureurs.
+            </p>
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <div class="color-line orange"></div>
+          <div>
+            <strong>Orange — Fermeture complète de 8 h à 16 h</strong>
+            <p>
+              Routes fermées à la circulation pendant toute
+              cette plage horaire.
+            </p>
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <div class="color-line green"></div>
+          <div>
+            <strong>Vert — Circulation en sens unique</strong>
+            <p>
+              Routes maintenues ouvertes dans un seul sens
+              de circulation.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- La carte sera ajoutée ici sous le nom fermetures-routes.png -->
+      <div class="image-placeholder">
+        <div class="placeholder-icon">🗺️</div>
+        <strong>Carte des fermetures de routes</strong>
+        <p>Carte détaillée à ajouter prochainement.</p>
+      </div>
+
+      <div class="notice">
+        <strong>⚠️ Attention</strong>
+        <p>
+          Merci de respecter la signalisation temporaire et les
+          consignes des signaleurs. Anticipez vos déplacements
+          et prévoyez un itinéraire adapté.
+        </p>
+      </div>
+    </section>
+
+    <!-- STATIONNEMENT -->
+
+    <section class="section-card">
+      <h2>🅿️ Stationnement</h2>
+      <p class="section-description">
+        Le stationnement des véhicules est organisé le long
+        de la rue de la Seppe et de la rue du Crêt.
+      </p>
+
+      <ul class="parking-list">
+        <li>
+          Le stationnement est autorisé sur les portions
+          indiquées sur la carte, sur une demi-chaussée.
+        </li>
+        <li>
+          Laissez impérativement libres les accès aux propriétés,
+          notamment les portails, entrées et sorties de véhicules.
+        </li>
+        <li>
+          Respectez la signalisation temporaire et les indications
+          des bénévoles chargés du stationnement.
+        </li>
+      </ul>
+
+      <!-- La carte sera ajoutée ici sous le nom parkings.png -->
+      <div class="image-placeholder">
+        <div class="placeholder-icon">📍</div>
+        <strong>Carte des zones de stationnement</strong>
+        <p>Emplacements le long de la rue de la Seppe et de la rue du Crêt.</p>
+      </div>
+
+      <div class="notice">
+        <strong>Merci de préserver l’accès des riverains</strong>
+        <p>
+          Aucun véhicule ne doit bloquer un accès à une propriété.
+          Merci de stationner uniquement dans les zones autorisées.
+        </p>
+      </div>
+    </section>
+
+    <div class="bottom-note">
+      Merci aux riverains, participants et bénévoles pour leur
+      compréhension et leur coopération.
+    </div>
+
+  </main>
+
+  <footer>
+    <p><strong>M’Essert Run 2026</strong> · Essert, Messery</p>
+    <a href="index.html">Retour au site public</a>
+  </footer>
+
+</body>
+</html>
