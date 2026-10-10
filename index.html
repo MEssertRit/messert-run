@@ -131,6 +131,112 @@ section{padding:54px 0}
 .map-options{grid-template-columns:1fr}
 .hero-meta{flex-direction:column;align-items:flex-start}
 }
+
+                                        'test css à vérifier si fonctionnel'
+
+```css
+.traffic-button-wrapper {
+  max-width: 850px;
+  margin: 0 auto 32px;
+  padding: 0 12px;
+}
+
+.traffic-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 22px 26px;
+  border-radius: 14px;
+  background: #b8493d;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(184, 73, 61, 0.28);
+  animation: trafficPulse 2s ease-in-out infinite;
+  transition: background 0.2s ease;
+}
+
+.traffic-button:hover {
+  background: #96382f;
+  color: #fff;
+}
+
+.traffic-button-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.traffic-button strong,
+.traffic-button small {
+  display: block;
+}
+
+.traffic-button strong {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.traffic-button small {
+  margin-top: 4px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.traffic-button-arrow {
+  font-size: 26px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+@keyframes trafficPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+@media (max-width: 600px) {
+  .traffic-button {
+    gap: 10px;
+    padding: 17px 14px;
+  }
+
+  .traffic-button-icon {
+    font-size: 25px;
+  }
+
+  .traffic-button strong {
+    font-size: 15px;
+  }
+
+  .traffic-button small {
+    font-size: 12px;
+  }
+
+  .traffic-button-arrow {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traffic-button {
+    animation: none;
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+  
 </style>
 </head>
 
@@ -363,11 +469,29 @@ Plusieurs parcours peuvent être affichés simultanément.
 <h2>Informations pratiques</h2>
 </div>
 
+  
+
+```html
+<div class="traffic-button-wrapper">
+  <a href="informations-pratiques.html" class="traffic-button">
+    <span class="traffic-button-icon">🚧</span>
+    <span>
+      <strong>Restrictions de circulation et stationnement</strong>
+      <small>Consulter les routes fermées et les parkings</small>
+    </span>
+    <span class="traffic-button-arrow">➜</span>
+  </a>
+</div>
+```
+
+
+  
+
 <div class="info-grid">
 
 <div class="info-card">
 <h3>📍 Où ?</h3>
-<p>Rendez-vous à Essert, sur la commune de Messery.</p>
+<p>Rendez-vous à Essert, sur le champ de foire.</p>
 </div>
 
 <div class="info-card">
@@ -384,7 +508,7 @@ Dimanche 8 novembre 2026.<br>
 <div class="info-card">
 <h3>🎉 Après l'effort</h3>
 <p>
-Un moment convivial attend les participants après les épreuves.
+Un moment convivial attend les participants après les épreuves. Une tartiflette cuite au four à pain sera servie aux participants des courses ou de la marche. Buvette ouverte sur place.
 </p>
 </div>
 
