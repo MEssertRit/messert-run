@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exports planning — M'Essert Run 2026</title>
+
+<style>
+:root {
+  --ink: #252525;
+  --muted: #666;
+  --line: #d6d6d6;
+  --paper: #fff;
+  --accent: #e6a15c;
+  --soft: #fff3e6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: #f3f4f5;
+  line-height: 1.4;
+}
+
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  padding: 22px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 25px;
+}
+
+header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+main {
+  width: min(100% - 28px, 900px);
+  margin: 24px auto 50px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.panel p {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  border-radius: 7px;
+  background: #252525;
+  color: white;
+  padding: 13px 17px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: wait;
+}
+
+button.secondary {
+  background: #ededed;
+  color: #252525;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#status {
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  white-space: pre-wrap;
+}
+
+#status.error {
+  border-color: #b42318;
+  color: #b42318;
+}
+
+#preview {
+  background: white;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+#preview h2 {
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  border: 1px solid #bbb;
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: #eee;
+  font-weight: bold;
+}
+
+small {
+  color: var(--muted);
+}
+
+.person-card {
+  margin: 22px 0;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.person-card h3 {
+  margin: 0 0 12px;
+  font-size: 19px;
+}
+
+.person-card .contact {
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.empty {
+  padding: 18px;
+  background: #f6f6f6;
+  border: 1px dashed #aaa;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 21px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+/* MISE EN PAGE POUR L'IMPRESSION A4 */
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+@media print {
+  body {
+    background: white;
+    color: #111;
+    font-size: 10pt;
+    line-height: 1.3;
+  }
+
+  header,
+  main > .panel,
+  #status,
+  .no-print {
+    display: none !important;
+  }
+
+  main {
+    width: 100%;
+    margin: 0;
+  }
+
+  #preview {
+    display: block !important;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  #preview h2 {
+    font-size: 17pt;
+    margin: 0 0 4mm;
+  }
+
+  #preview .subtitle {
+    font-size: 9pt;
+    margin: 0 0 6mm;
+  }
+
+  table {
+    width: 100%;
+    font-size: 9pt;
+    table-layout: fixed;
+  }
+
+  th, td {
+    padding: 5px;
+    border: 1px solid #777;
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    background: #eee !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .person-card {
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .person-card h3 {
+    font-size: 14pt;
+    margin: 0 0 3mm;
+  }
+
+  .person-card table {
+    margin-bottom: 7mm;
+  }
+
+  .person-card + .person-card {
+    margin-top: 8mm;
+  }
+
+  .person-card .contact {
+    margin-bottom: 3mm;
+  }
+
+  .empty {
+    border: 1px solid #aaa;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>M'Essert Run 2026</h1>
+  <p>Exports et impression du planning des bénévoles</p>
+</header>
+
+<main>
+
+  <section class="panel">
+    <h2>1. Planning général</h2>
+    <p>
+      Toutes les missions classées par heure, avec leurs lieux
+      et les bénévoles affectés. Les missions non pourvues
+      restent visibles.
+    </p>
+    <button id="export-general" disabled>
+      Préparation des données…
+    </button>
+  </section>
+
+  <section class="panel">
+    <h2>2. Tâches par bénévole</h2>
+    <p>
+      Une fiche par bénévole, avec toutes ses missions classées
+      chronologiquement et leurs horaires.
+    </p>
+    <button id="export-volunteers" disabled>
+      Préparation des données…
+    </button>
+  </section>
+
+  <section class="panel no-print">
+    <div class="actions">
+      <button class="secondary" id="reload">Actualiser les données</button>
+      <button class="secondary" onclick="location.href='administration.html'">
+        Retour à l'administration
+      </button>
+    </div>
+  </section>
+
+  <div id="status">Chargement des données du planning…</div>
+
+  <section id="preview">
+    <h2>Aperçu</h2>
+    <p>Les documents seront disponibles lorsque les données seront chargées.</p>
+  </section>
+
+</main>
+
+<script>
+const statusBox = document.getElementById("status");
+const preview = document.getElementById("preview");
+const generalButton = document.getElementById("export-general");
+const volunteerButton = document.getElementById("export-volunteers");
+
+let missions = [];
+let volunteers = [];
+let assignments = [];
+let currentExport = null;
+
+function setStatus(message, error = false) {
+  statusBox.textContent = message;
+  statusBox.className = error ? "error" : "";
+}
+
+async function getJSON(url) {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: { "Accept": "application/json" },
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error(url + " : erreur HTTP " + response.status);
+  }
+
+  return response.json();
+}
+
+function asArray(data, keys = []) {
+  if (Array.isArray(data)) return data;
+
+  if (data && typeof data === "object") {
+    for (const key of keys) {
+      if (Array.isArray(data[key])) return data[key];
+    }
+  }
+
+  return [];
+}
+
+function clean(value) {
+  if (value === null || value === undefined || value === "") {
+    return "—";
+  }
+
+  return String(value);
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function getVolunteerName(volunteer) {
+  return [volunteer.first_name, volunteer.last_name]
+    .filter(value => value && String(value).trim())
+    .join(" ")
+    .trim() || "Bénévole sans nom";
+}
+
+function getMissionId(mission) {
+  return String(mission.id ?? mission.mission_id ?? "");
+}
+
+function getVolunteerId(volunteer) {
+  return String(volunteer.id ?? volunteer.volunteer_id ?? "");
+}
+
+function getAssignmentMissionId(assignment) {
+  return String(assignment.mission_id ?? "");
+}
+
+function getAssignmentVolunteerId(assignment) {
+  return String(assignment.volunteer_id ?? "");
+}
+
+function getMissionVolunteers(mission) {
+  const id = getMissionId(mission);
+
+  return assignments
+    .filter(a => getAssignmentMissionId(a) === id)
+    .map(a => {
+      const volunteer = volunteers.find(
+        v => getVolunteerId(v) === getAssignmentVolunteerId(a)
+      );
+
+      if (volunteer) return getVolunteerName(volunteer);
+
+      // Certaines API renvoient aussi le nom directement.
+      const directName = [
+        a.first_name ?? a.volunteer_first_name,
+        a.last_name ?? a.volunteer_last_name
+      ].filter(Boolean).join(" ");
+
+      return directName || null;
+    })
+    .filter(Boolean)
+    .filter((name, index, list) => list.indexOf(name) === index)
+    .sort((a, b) => a.localeCompare(b, "fr"));
+}
+
+function getTime(value) {
+  if (!value) return "—";
+  return String(value).slice(0, 5);
+}
+
+function getMissionSortTime(mission) {
+  return getTime(mission.start_time);
+}
+
+function compareTimes(a, b) {
+  return getMissionSortTime(a).localeCompare(getMissionSortTime(b));
+}
+
+function getMissionLabel(mission) {
+  return mission.title ?? mission.name ?? "Mission sans titre";
+}
+
+function getMissionPlace(mission) {
+  return mission.location ?? mission.place ?? "";
+}
+
+function getMissionInstructions(mission) {
+  return mission.instructions ?? mission.details ?? "";
+}
+
+function getMissionPeriod(mission) {
+  const start = getTime(mission.start_time);
+  const end = getTime(mission.end_time);
+
+  if (start === "—" && end === "—") return "Horaire à préciser";
+  if (end === "—") return "Dès " + start;
+  if (start === "—") return "Jusqu'à " + end;
+
+  return start + " – " + end;
+}
+
+function buildGeneralHTML() {
+  const ordered = [...missions].sort(compareTimes);
+
+  const rows = ordered.map(mission => {
+    const names = getMissionVolunteers(mission);
+    const place = getMissionPlace(mission);
+    const instructions = getMissionInstructions(mission);
+
+    return `
+      <tr>
+        <td>${escapeHTML(getMissionPeriod(mission))}</td>
+        <td>
+          <strong>${escapeHTML(getMissionLabel(mission))}</strong>
+          ${mission.category ? `<br><small>${escapeHTML(mission.category)}</small>` : ""}
+          ${mission.race ? `<br><small>${escapeHTML(mission.race)}</small>` : ""}
+          ${instructions ? `<br><small>${escapeHTML(instructions)}</small>` : ""}
+        </td>
+        <td>${escapeHTML(clean(place))}</td>
+        <td>
+          ${names.length
+            ? names.map(escapeHTML).join("<br>")
+            : "<strong>À pourvoir</strong>"}
+        </td>
+      </tr>`;
+  }).join("");
+
+  return `
+    <h2>Planning général des bénévoles</h2>
+    <p class="subtitle">
+      M'Essert Run 2026 · Dimanche 8 novembre 2026
+      · Généré le ${new Date().toLocaleDateString("fr-FR")}
+    </p>
+    ${ordered.length ? `
+      <table>
+        <colgroup>
+          <col style="width:18%">
+          <col style="width:32%">
+          <col style="width:20%">
+          <col style="width:30%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Horaires</th>
+            <th>Mission</th>
+            <th>Lieu</th>
+            <th>Bénévoles attribués</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    ` : `<p class="empty">Aucune mission n'a été enregistrée.</p>`}
+  `;
+}
+
+function buildVolunteersHTML() {
+  const orderedVolunteers = [...volunteers].sort((a, b) =>
+    getVolunteerName(a).localeCompare(getVolunteerName(b), "fr")
+  );
+
+  const cards = orderedVolunteers.map(volunteer => {
+    const volunteerId = getVolunteerId(volunteer);
+
+    const assignedMissions = missions
+      .filter(mission => assignments.some(assignment =>
+        getAssignmentMissionId(assignment) === getMissionId(mission) &&
+        getAssignmentVolunteerId(assignment) === volunteerId
+      ))
+      .sort(compareTimes);
+
+    const rows = assignedMissions.map(mission => `
+      <tr>
+        <td>${escapeHTML(getMissionPeriod(mission))}</td>
+        <td>
+          <strong>${escapeHTML(getMissionLabel(mission))}</strong>
+          ${mission.race ? `<br><small>${escapeHTML(mission.race)}</small>` : ""}
+          ${getMissionInstructions(mission)
+            ? `<br><small>${escapeHTML(getMissionInstructions(mission))}</small>`
+            : ""}
+        </td>
+        <td>${escapeHTML(clean(getMissionPlace(mission)))}</td>
+      </tr>
+    `).join("");
+
+    return `
+      <section class="person-card">
+        <h3>${escapeHTML(getVolunteerName(volunteer))}</h3>
+        ${volunteer.phone
+          ? `<p class="contact">Téléphone : ${escapeHTML(volunteer.phone)}</p>`
+          : ""}
+        ${assignedMissions.length ? `
+          <table>
+            <colgroup>
+              <col style="width:24%">
+              <col style="width:46%">
+              <col style="width:30%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Horaires</th>
+                <th>Mission</th>
+                <th>Lieu</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        ` : `<p class="empty">Aucune mission attribuée.</p>`}
+      </section>
+    `;
+  }).join("");
+
+  return `
+    <h2>Fiches individuelles des bénévoles</h2>
+    <p class="subtitle">
+      M'Essert Run 2026 · Dimanche 8 novembre 2026
+      · Généré le ${new Date().toLocaleDateString("fr-FR")}
+    </p>
+    ${orderedVolunteers.length
+      ? cards
+      : `<p class="empty">Aucun bénévole n'a été enregistré.</p>`}
+  `;
+}
+
+async function loadData() {
+  generalButton.disabled = true;
+  volunteerButton.disabled = true;
+  generalButton.textContent = "Chargement…";
+  volunteerButton.textContent = "Chargement…";
+
+  setStatus("Récupération des missions, bénévoles et affectations…");
+
+  try {
+    const [missionData, volunteerData, assignmentData] = await Promise.all([
+      getJSON("/api/missions"),
+      getJSON("/api/volunteers"),
+      getJSON("/api/assignments")
+    ]);
+
+    missions = asArray(missionData, ["missions", "data", "results"]);
+    volunteers = asArray(volunteerData, ["volunteers", "data", "results"]);
+    assignments = asArray(assignmentData, ["assignments", "data", "results"]);
+
+    if (!missions.length && !volunteers.length && !assignments.length) {
+      throw new Error(
+        "Les API ont répondu, mais aucune donnée n'a été trouvée. " +
+        "Il faut vérifier le format des réponses."
+      );
+    }
+
+    generalButton.disabled = false;
+    volunteerButton.disabled = false;
+    generalButton.textContent = "Imprimer le planning général / PDF";
+    volunteerButton.textContent = "Imprimer les tâches par bénévole / PDF";
+
+    setStatus(
+      "Données chargées : " + missions.length + " mission(s), " +
+      volunteers.length + " bénévole(s), " +
+      assignments.length + " affectation(s)."
+    );
+
+    preview.innerHTML = buildGeneralHTML();
+
+  } catch (error) {
+    console.error(error);
+
+    setStatus(
+      "Impossible de charger les données.\n\n" +
+      error.message + "\n\n" +
+      "Vérifie que les API /api/missions, /api/volunteers et " +
+      "/api/assignments existent et répondent correctement.",
+      true
+    );
+
+    generalButton.textContent = "Données indisponibles";
+    volunteerButton.textContent = "Données indisponibles";
+  }
+}
+
+function printExport(type) {
+  if (type === "general") {
+    preview.innerHTML = buildGeneralHTML();
+    document.title = "Messert-Run-Planning-general";
+  } else {
+    preview.innerHTML = buildVolunteersHTML();
+    document.title = "Messert-Run-Taches-par-benevole";
+  }
+
+  currentExport = type;
+
+  // Attend le rendu de la page avant d'ouvrir la fenêtre d'impression.
+  requestAnimationFrame(() => {
+    window.print();
+  });
+}
+
+generalButton.addEventListener("click", () => printExport("general"));
+volunteerButton.addEventListener("click", () => printExport("volunteers"));
+document.getElementById("reload").addEventListener("click", loadData);
+
+window.addEventListener("afterprint", () => {
+  document.title = "Exports planning — M'Essert Run 2026";
+  preview.innerHTML = buildGeneralHTML();
+});
+
+loadData();
+</script>
+
+</body>
+</html>
